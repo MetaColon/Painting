@@ -21,7 +21,7 @@ namespace Painting.Types.Paint
         public Colour(Color color)
         {
             Color = color;
-            Visible = true;
+            Visible = !color.IsEmpty;
         }
 
         public override bool Equals(object obj) => obj is Colour && Equals((Colour) obj);

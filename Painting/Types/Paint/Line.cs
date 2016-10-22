@@ -14,15 +14,9 @@ namespace Painting.Types.Paint
             }
             set
             {
-                if (value.X < Position.X)
-                {
-                    _end = new Coordinate(Position);
-                    Position.X = value.X;
-                    Position.Y = value.Y;
-                }
-                else
-                    _end = value;
-                Size = _end.Sub(Position);
+                _end = value;
+                if (Position != null && value != null && !Size.Equals(End.Sub(Position)))
+                    Size = End.Sub (Position);
             }
         }
 
@@ -36,37 +30,38 @@ namespace Painting.Types.Paint
             set
             {
                 _position = value;
-                Size = End.Sub(Position);
+                if (End != null && Position != null && !Size.Equals(End.Sub(Position)))
+                    Size = End.Sub (Position);
             }
         }
 
         public float Width { get; set; }
 
-        public Line(Coordinate start, Coordinate end, Colour lineColour, float width) : base (start, end.Sub(start), lineColour)
+        public Line (Coordinate start, Coordinate end, Colour lineColour, float width) : base (start, end.Sub (start), lineColour)
         {
             End = end;
             Width = width;
         }
 
-        public override bool Equals(object obj) => obj is Line && Equals((Line) obj);
+        public override bool Equals (object obj) => obj is Line && Equals ((Line) obj);
 
-        public override int GetHashCode()
+        public override int GetHashCode ()
         {
             unchecked
             {
-                var hashCode = base.GetHashCode();
-                hashCode = (hashCode*397) ^ (End?.GetHashCode() ?? 0);
-                hashCode = (hashCode*397) ^ Width.GetHashCode();
+                var hashCode = base.GetHashCode ();
+                hashCode = (hashCode * 397) ^ (End?.GetHashCode () ?? 0);
+                hashCode = (hashCode * 397) ^ Width.GetHashCode ();
                 return hashCode;
             }
         }
 
-        protected bool Equals(Line other) => other != null && Equals(End, other.End) && MainColour.Equals(other.MainColour) && Equals(Size, other.Size) && Math.Abs(Width - other.Width) < 0.001;
+        protected bool Equals (Line other) => other != null && Equals (End, other.End) && MainColour.Equals (other.MainColour) && Equals (Size, other.Size) && Math.Abs (Width - other.Width) < 0.001;
 
-        public void Paint(Graphics p)
+        public void Paint (Graphics p)
         {
             if (MainColour.Visible)
-                p.DrawLine(new Pen(MainColour.Color, Width), Position.X, Position.Y, End.X, End.Y);
+                p.DrawLine (new Pen (MainColour.Color, Width), Position.X, Position.Y, End.X, End.Y);
         }
     }
 }

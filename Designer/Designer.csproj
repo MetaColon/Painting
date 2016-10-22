@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Saving.cs" />
     <EmbeddedResource Include="Designer.resx">
       <DependentUpon>Designer.cs</DependentUpon>
     </EmbeddedResource>

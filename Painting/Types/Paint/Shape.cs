@@ -4,6 +4,8 @@ namespace Painting.Types.Paint
 {
     public class Shape
     {
+        public Shape () { }
+
         public Shape(Coordinate position, Coordinate size, Colour mainColour)
         {
             Size = size;
@@ -39,9 +41,9 @@ namespace Painting.Types.Paint
             get { return _size; }
             set
             {
-                if (_size != null && this is Line)
-                    ((Line) this).End = ((Line) this).End.Add(value.Sub(_size));
                 _size = value;
+                if (Size != null && this is Line && ((Line)this).End != null && !((Line)this).End.Equals(((Line)this).Position.Add(Size)))
+                    ((Line) this).End = ((Line) this).Position.Add(Size);
             }
         }
 

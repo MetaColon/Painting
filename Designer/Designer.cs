@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Painting.Types.Paint;
@@ -151,29 +152,38 @@ namespace Designer
             if (SelectedShapeInViewIndex > -1 && SelectedShapeInViewIndex < Collection.Shapes.Count)
             {
                 var s = Collection.Shapes[SelectedShapeInViewIndex];
+                var line = s as Line;
                 switch (e.KeyCode)
                 {
                     case Keys.Right:
                         e.IsInputKey = true;
                         s.Position = s.Position.Add (new Coordinate (5, 0));
+                        if(line != null)
+                            line.End = line?.End.Add(new Coordinate(5, 0));
                         SelectShape ();
                         Refresh ();
                         break;
                     case Keys.Left:
                         e.IsInputKey = true;
                         s.Position = s.Position.Add (new Coordinate (-5, 0));
+                        if (line != null)
+                            line.End = line?.End.Add (new Coordinate (-5, 0));
                         SelectShape ();
                         Refresh ();
                         break;
                     case Keys.Up:
                         e.IsInputKey = true;
                         s.Position = s.Position.Add (new Coordinate (0, -5));
+                        if (line != null)
+                            line.End = line?.End.Add (new Coordinate (0, -5));
                         SelectShape ();
                         Refresh ();
                         break;
                     case Keys.Down:
                         e.IsInputKey = true;
                         s.Position = s.Position.Add (new Coordinate (0, 5));
+                        if (line != null)
+                            line.End = line?.End.Add (new Coordinate (0, 5));
                         SelectShape ();
                         Refresh ();
                         break;
@@ -224,5 +234,7 @@ namespace Designer
             foreach (Control control in Controls)
                 control.PreviewKeyDown += Designer_PreviewKeyDown;
         }
+
+        private void SaveButton_Click (object sender, EventArgs e) => File.WriteAllText("result.txt", Saving.GetSaveCode(Collection));
     }
 }

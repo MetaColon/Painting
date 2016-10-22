@@ -38,6 +38,7 @@
             this.LineColourBuuton = new System.Windows.Forms.Button();
             this.MainColorButton = new System.Windows.Forms.Button();
             this.Pointer = new System.Windows.Forms.Label();
+            this.SaveButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Edges)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Width)).BeginInit();
             this.SuspendLayout();
@@ -122,11 +123,22 @@
             this.Pointer.Size = new System.Drawing.Size(0, 13);
             this.Pointer.TabIndex = 8;
             // 
+            // SaveButton
+            // 
+            this.SaveButton.Location = new System.Drawing.Point(1258, 12);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(75, 23);
+            this.SaveButton.TabIndex = 9;
+            this.SaveButton.Text = "Save";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            // 
             // Designer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1391, 784);
+            this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.Pointer);
             this.Controls.Add(this.MainColorButton);
             this.Controls.Add(this.LineColourBuuton);
@@ -163,6 +175,7 @@
         private System.Windows.Forms.Button LineColourBuuton;
         private System.Windows.Forms.Button MainColorButton;
         private System.Windows.Forms.Label Pointer;
+        private System.Windows.Forms.Button SaveButton;
     }
 }
 
