@@ -98,7 +98,7 @@
             // 
             this.LineColourBuuton.Location = new System.Drawing.Point(574, 13);
             this.LineColourBuuton.Name = "LineColourBuuton";
-            this.LineColourBuuton.Size = new System.Drawing.Size(245, 23);
+            this.LineColourBuuton.Size = new System.Drawing.Size(326, 23);
             this.LineColourBuuton.TabIndex = 6;
             this.LineColourBuuton.Text = "Select Line Color";
             this.LineColourBuuton.UseVisualStyleBackColor = true;
@@ -106,9 +106,9 @@
             // 
             // MainColorButton
             // 
-            this.MainColorButton.Location = new System.Drawing.Point(825, 13);
+            this.MainColorButton.Location = new System.Drawing.Point(906, 13);
             this.MainColorButton.Name = "MainColorButton";
-            this.MainColorButton.Size = new System.Drawing.Size(267, 23);
+            this.MainColorButton.Size = new System.Drawing.Size(346, 23);
             this.MainColorButton.TabIndex = 7;
             this.MainColorButton.Text = "Select Main Color";
             this.MainColorButton.UseVisualStyleBackColor = true;

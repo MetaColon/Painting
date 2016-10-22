@@ -64,7 +64,12 @@ namespace Designer
             MainColor = Color.Empty;
         }
 
-        private void AddShape (Shape s) => Collection.Shapes = new List<Shape> (new List<Shape> (Collection.Shapes) { s });
+        private void AddShape (Shape s)
+        {
+            if (s is Polygon && Edges.Value < 2 || MainColor.IsEmpty && LineColor.IsEmpty || Width.Value < 1 && MainColor.IsEmpty)
+                return;
+            Collection.Shapes = new List<Shape>(new List<Shape>(Collection.Shapes) {s});
+        }
 
         private void Designer_MouseClick (object sender, MouseEventArgs e)
         {
@@ -177,6 +182,37 @@ namespace Designer
                         SelectedShapeInViewIndex = -1;
                         Collection.Shapes.Remove(s);
                         SelectShape();
+                        Refresh();
+                        break;
+                    case Keys.D:
+                        e.IsInputKey = true;
+                        s.Size = s.Size.Add(new Coordinate(5, 0));
+                        SelectShape ();
+                        Refresh ();
+                        break;
+                    case Keys.S:
+                        e.IsInputKey = true;
+                        s.Size = s.Size.Add (new Coordinate (0, 5));
+                        SelectShape ();
+                        Refresh ();
+                        break;
+                    case Keys.A:
+                        e.IsInputKey = true;
+                        s.Size = s.Size.Add (new Coordinate (-5, 0));
+                        SelectShape ();
+                        Refresh ();
+                        break;
+                    case Keys.W:
+                        e.IsInputKey = true;
+                        s.Size = s.Size.Add (new Coordinate (0, -5));
+                        SelectShape ();
+                        Refresh ();
+                        break;
+                    case Keys.T:
+                        if (!(s is Polygon))
+                            break;
+                        e.IsInputKey = true;
+                        ((Polygon) s).TurningAngle+=5;
                         Refresh();
                         break;
                 }
