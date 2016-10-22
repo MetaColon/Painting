@@ -27,6 +27,21 @@ namespace Painting.Types.Paint
 
         public virtual Colour MainColour { get; set; }
         public virtual Coordinate Position { get; set; }
-        public virtual Coordinate Size { get; set; }
+
+        private Coordinate _size;
+
+        public virtual Coordinate Size
+        {
+            get
+            {
+                return _size;
+            }
+            set
+            {
+                if (_size != null && this is Line)
+                    ((Line) this).End = ((Line) this).End.Add (value.Sub (_size));
+                _size = value;
+            }
+        }
     }
 }

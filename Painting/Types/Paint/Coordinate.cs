@@ -45,11 +45,15 @@ namespace Painting.Types.Paint
 
         public override string ToString() => $"X: {X}; Y:{Y}";
 
-        public Coordinate add(Coordinate a) => new Coordinate(X + a.X, Y + a.Y);
-        public Coordinate sub(Coordinate s) => add(s.mult(-1));
+        public Coordinate Add(Coordinate a) => new Coordinate(X + a.X, Y + a.Y);
 
-        public Coordinate mult(double m) => new Coordinate(X*(float) m, Y*(float) m);
-        public Coordinate mult(Coordinate m) => new Coordinate(X*m.X, Y*m.Y);
+        public Coordinate Sub(Coordinate s) => Add(s.Mult(-1));
+
+        public Coordinate Mult(double m) => new Coordinate(X*(float) m, Y*(float) m);
+        public Coordinate Mult(Coordinate m) => new Coordinate(X*m.X, Y*m.Y);
+
+        public Coordinate Div (double d) => new Coordinate(X / (float) d, Y / (float)d);
+        public Coordinate Div (Coordinate d) => new Coordinate(X / d.X, Y / d.Y);
 
         public PointF GetPointF() => new PointF(X, Y);
     }

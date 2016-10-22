@@ -8,7 +8,7 @@ namespace Painting.Types.Paint
         public Coordinate End { get; set; }
         public float Width { get; set; }
 
-        public Line(Coordinate start, Coordinate end, Colour lineColour, Coordinate size, float width) : base (start, size, lineColour)
+        public Line(Coordinate start, Coordinate end, Colour lineColour, float width) : base (start, end.Sub(start), lineColour)
         {
             End = end;
             Width = width;

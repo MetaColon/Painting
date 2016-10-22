@@ -17,17 +17,31 @@ namespace Painting.Types.Paint
             }
             set
             {
-                if (Shapes != null)
+                if (Shapes != null && _position != null)
                     foreach (var shape in Shapes)
-                        shape.Position = shape.Position.add (value.sub (_position));
+                        shape.Position = shape.Position.Add (value.Sub (_position));
                 _position = value;
+            }
+        }
+
+        private Coordinate _size;
+
+        public override Coordinate Size
+        {
+            get { return _size; }
+            set
+            {
+                if(Shapes != null && _size != null)
+                    foreach (var shape in Shapes)
+                        shape.Size = shape.Size.Add(value.Sub(_size));
+                _size = value;
             }
         }
 
         public ShapeCollection (List<Shape> shapes)
             : base (
                 shapes.Select (shape => shape.Position).Min (),
-                shapes.Select (shape => shape.Size).Max ().sub (shapes.Select (shape => shape.Position).Min ()), shapes.FirstOrDefault (shape => shape.MainColour.Visible)?.MainColour)
+                shapes.Select (shape => shape.Size).Max (), shapes.FirstOrDefault (shape => shape.MainColour.Visible)?.MainColour)
 
         {
             Shapes = new List<Shape> (shapes);

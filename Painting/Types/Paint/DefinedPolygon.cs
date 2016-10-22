@@ -10,7 +10,7 @@ namespace Painting.Types.Paint
         public int Width { get; set; }
         public Colour LineColour { get; set; }
 
-        public DefinedPolygon (List<Coordinate> edges, int width, Colour lineColour, Colour mainColour) : base (edges.Min (), edges.Max ().sub (edges.Min ()), mainColour)
+        public DefinedPolygon (List<Coordinate> edges, int width, Colour lineColour, Colour mainColour) : base (edges.Min (), edges.Max ().Sub (edges.Min ()), mainColour)
         {
             Edges = edges;
             Width = width;

@@ -36,7 +36,6 @@ namespace Painting.Types.Paint
                     p.FillRectangle(new SolidBrush(MainColour.Color), Position.X, Position.Y, Size.X, Size.Y);
                 if (LineColour.Visible)
                     p.DrawRectangle(new Pen(LineColour.Color, Width), Position.X, Position.Y, Size.X, Size.Y);
-                return;
         }
     }
 }

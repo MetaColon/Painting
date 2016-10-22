@@ -16,13 +16,14 @@ namespace Painting
         public MainForm ()
         {
             InitializeComponent ();
-            i = new Coordinate(0,0);
+            i = new Coordinate(100,100);
             col = new ShapeCollection(new List<Shape>
             {
-                new Polygon(8, 2, new Colour(Color.Red), new Coordinate(10, 10), new Coordinate(100, 100),
+                new Polygon(8, 2, new Colour(Color.Red), new Coordinate(10, 10), new Coordinate(1, 1),
                     Colour.Invisible(), 0),
-                new Ellipse(2, new Colour(Color.Blue), new Coordinate(60, 60), new Coordinate(100, 100),
-                    Colour.Invisible())
+                new Ellipse(2, new Colour(Color.Blue), new Coordinate(60, 60), new Coordinate(1, 1),
+                    Colour.Invisible()),
+                new Line(new Coordinate(10,10), new Coordinate(11, 11), new Colour(Color.Green), 2)
             });
         }
 
@@ -33,8 +34,8 @@ namespace Painting
 
         private void timer1_Tick (object sender, EventArgs e)
         {
-            i = i.add(new Coordinate(1, 1));
-            col.Position = i;
+            i = i.Add(new Coordinate(1, 1));
+            col.Size = new Coordinate(i.X, i.Y);
             label1.Text = i.ToString();
             Refresh();
         }

@@ -56,12 +56,12 @@ namespace Painting.Types.Paint
 
         public List<Coordinate> GetPoints()
         {
-            var m = Position.add(Size.mult(0.5));
+            var m = Position.Add(Size.Mult(0.5));
             var fin = new List<Coordinate>();
             if (AngleCount == 0)
                 return fin;
             for (var i = TurningAngle; i < 360 + TurningAngle; i += (float)360/AngleCount)
-                fin.Add(m.add(new Coordinate((float) Math.Cos(Physomatik.ToRadian(i))*(Size.X/2),
+                fin.Add(m.Add(new Coordinate((float) Math.Cos(Physomatik.ToRadian(i))*(Size.X/2),
                     (float) Math.Sin(Physomatik.ToRadian(i))*(Size.Y/2))));
             return fin;
         }
