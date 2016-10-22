@@ -37,6 +37,7 @@
             this.ColorPicker = new System.Windows.Forms.ColorDialog();
             this.LineColourBuuton = new System.Windows.Forms.Button();
             this.MainColorButton = new System.Windows.Forms.Button();
+            this.Pointer = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Edges)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Width)).BeginInit();
             this.SuspendLayout();
@@ -113,11 +114,20 @@
             this.MainColorButton.UseVisualStyleBackColor = true;
             this.MainColorButton.Click += new System.EventHandler(this.MainColorButton_Click);
             // 
+            // Pointer
+            // 
+            this.Pointer.AutoSize = true;
+            this.Pointer.Location = new System.Drawing.Point(988, 332);
+            this.Pointer.Name = "Pointer";
+            this.Pointer.Size = new System.Drawing.Size(0, 13);
+            this.Pointer.TabIndex = 8;
+            // 
             // Designer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1391, 784);
+            this.Controls.Add(this.Pointer);
             this.Controls.Add(this.MainColorButton);
             this.Controls.Add(this.LineColourBuuton);
             this.Controls.Add(this.Width);
@@ -130,7 +140,10 @@
             this.Name = "Designer";
             this.Text = "Designer";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.Designer_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Designer_Paint);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Designer_MouseClick);
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Designer_PreviewKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.Edges)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Width)).EndInit();
             this.ResumeLayout(false);
@@ -149,6 +162,7 @@
         private System.Windows.Forms.ColorDialog ColorPicker;
         private System.Windows.Forms.Button LineColourBuuton;
         private System.Windows.Forms.Button MainColorButton;
+        private System.Windows.Forms.Label Pointer;
     }
 }
 

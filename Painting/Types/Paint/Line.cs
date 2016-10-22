@@ -5,7 +5,41 @@ namespace Painting.Types.Paint
 {
     public class Line : Shape
     {
-        public Coordinate End { get; set; }
+        private Coordinate _end;
+        public Coordinate End
+        {
+            get
+            {
+                return _end;
+            }
+            set
+            {
+                if (value.X < Position.X)
+                {
+                    _end = new Coordinate(Position);
+                    Position.X = value.X;
+                    Position.Y = value.Y;
+                }
+                else
+                    _end = value;
+                Size = _end.Sub(Position);
+            }
+        }
+
+        private Coordinate _position;
+        public override Coordinate Position
+        {
+            get
+            {
+                return _position;
+            }
+            set
+            {
+                _position = value;
+                Size = End.Sub(Position);
+            }
+        }
+
         public float Width { get; set; }
 
         public Line(Coordinate start, Coordinate end, Colour lineColour, float width) : base (start, end.Sub(start), lineColour)

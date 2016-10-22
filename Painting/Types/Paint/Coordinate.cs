@@ -8,15 +8,16 @@ namespace Painting.Types.Paint
         public float X { get; set; }
         public float Y { get; set; }
 
-        public Coordinate()
-        {
-
-        }
-
         public Coordinate(float x, float y)
         {
             X = x;
             Y = y;
+        }
+
+        public Coordinate(Coordinate coordinate)
+        {
+            X = coordinate.X;
+            Y = coordinate.Y;
         }
 
         public override bool Equals(object obj) => obj is Coordinate && Equals((Coordinate) obj);
