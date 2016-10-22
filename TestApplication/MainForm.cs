@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Painting.Types.Paint;
-using Rectangle = Painting.Types.Paint.Rectangle;
 
-namespace Painting
+namespace TestApplication
 {
     public partial class MainForm : Form
     {
-        private Coordinate i;
-        private ShapeCollection col;
+        private Coordinate _i;
+        private readonly ShapeCollection _col;
 
         public MainForm ()
         {
             InitializeComponent ();
-            i = new Coordinate(100,100);
-            col = new ShapeCollection(new List<Shape>
+            _i = new Coordinate (100, 100);
+            _col = new ShapeCollection (new List<Shape>
             {
                 new Polygon(8, 2, new Colour(Color.Red), new Coordinate(10, 10), new Coordinate(1, 1),
                     Colour.Invisible(), 0),
@@ -27,17 +30,17 @@ namespace Painting
             });
         }
 
-        private void MainForm_Paint(object sender, PaintEventArgs e)
+        private void MainForm_Paint (object sender, PaintEventArgs e)
         {
-            col.Paint(e.Graphics);
+            _col.Paint (e.Graphics);
         }
 
         private void timer1_Tick (object sender, EventArgs e)
         {
-            i = i.Add(new Coordinate(1, 1));
-            col.Size = new Coordinate(i.X, i.Y);
-            label1.Text = i.ToString();
-            Refresh();
+            _i = _i.Add (new Coordinate (1, 1));
+            _col.Size = new Coordinate (_i.X, _i.Y);
+            label1.Text = _i.ToString ();
+            Refresh ();
         }
     }
 }
