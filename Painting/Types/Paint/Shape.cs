@@ -34,18 +34,7 @@ namespace Painting.Types.Paint
         public virtual Colour MainColour { get; set; }
         public virtual Coordinate Position { get; set; }
 
-        private Coordinate _size;
-
-        public virtual Coordinate Size
-        {
-            get { return _size; }
-            set
-            {
-                _size = value;
-                if (Size != null && this is Line && ((Line)this).End != null && !((Line)this).End.Equals(((Line)this).Position.Add(Size)))
-                    ((Line) this).End = ((Line) this).Position.Add(Size);
-            }
-        }
+        public virtual Coordinate Size { get; set; } //If avoidable, don't change the size :)
 
         public bool IsCoordinateInThis(Coordinate coordinate)
             =>

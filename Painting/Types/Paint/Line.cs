@@ -21,6 +21,8 @@ namespace Painting.Types.Paint
         }
 
         private Coordinate _position;
+        private Coordinate _size;
+
         public override Coordinate Position
         {
             get
@@ -31,7 +33,19 @@ namespace Painting.Types.Paint
             {
                 _position = value;
                 if (End != null && Position != null && !Size.Equals(End.Sub(Position)))
-                    Size = End.Sub (Position);
+                    End = Position.Add(Size);
+            }
+        }
+
+        public override Coordinate Size
+        {
+            get { return _size; }
+            set
+            {
+
+                if (Size != null && End != null && !End.Equals (Position.Add (Size)))
+                    End = Position.Add (Size);
+                _size = value;
             }
         }
 
