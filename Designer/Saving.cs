@@ -28,7 +28,7 @@ namespace Designer
                     fin +=
                         $"new Rectangle({rectangle.Width}, {GetColourString(rectangle.LineColour)}, {GetCoordinate(shape.Position)}, {GetCoordinate(shape.Size)}, {GetColourString(shape.MainColour)}),";
             }
-            fin += "});";
+            fin += "}){Position = new Coordinate(0, 0)};";
             return fin;
         }
 
