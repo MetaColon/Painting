@@ -103,11 +103,7 @@ namespace Designer
             SelectShape ();
         }
 
-        private void Designer_Paint (object sender, PaintEventArgs e)
-        {
-            Collection.Paint (e.Graphics);
-            new ShapeCollection (new List<Shape> { new Ellipse (0, new Colour (Color.Empty), new Coordinate (185, 225), new Coordinate (85, 110), new Colour (Color.FromArgb (-128))), new Polygon (5, 3, new Colour (Color.FromArgb (-16711808)), new Coordinate (210, 165), new Coordinate (100, 100), new Colour (Color.Empty), 25), new Line (new Coordinate (175, 195), new Coordinate (280, 295), new Colour (Color.FromArgb (-65408)), 3), }).Paint (e.Graphics);
-        }
+        private void Designer_Paint (object sender, PaintEventArgs e) => Collection.Paint (e.Graphics);
 
         private void Designer_PreviewKeyDown (object sender, PreviewKeyDownEventArgs e)
         {
@@ -212,7 +208,13 @@ namespace Designer
             MainColor = ColorPicker.Color;
         }
 
-        private void SaveButton_Click (object sender, EventArgs e) => File.WriteAllText ("result.txt", Saving.GetSaveCode (Collection));
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            var c = 0;
+            while (File.Exists($"result{c}.txt"))
+                c++;
+            File.WriteAllText($"result{c}.txt", Saving.GetSaveCode(Collection));
+        }
 
         private void SelectableShapes_SelectedIndexChanged (object sender, EventArgs e)
             => Edges.Enabled = Items[SelectableShapes.SelectedIndex] == "Polygon";
