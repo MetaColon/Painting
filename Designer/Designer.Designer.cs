@@ -39,6 +39,7 @@
             this.MainColorButton = new System.Windows.Forms.Button();
             this.Pointer = new System.Windows.Forms.Label();
             this.SaveButton = new System.Windows.Forms.Button();
+            this.CopyCodeButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Edges)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Width)).BeginInit();
             this.SuspendLayout();
@@ -99,7 +100,7 @@
             // 
             this.LineColourBuuton.Location = new System.Drawing.Point(574, 13);
             this.LineColourBuuton.Name = "LineColourBuuton";
-            this.LineColourBuuton.Size = new System.Drawing.Size(326, 23);
+            this.LineColourBuuton.Size = new System.Drawing.Size(300, 23);
             this.LineColourBuuton.TabIndex = 6;
             this.LineColourBuuton.Text = "Select Line Color";
             this.LineColourBuuton.UseVisualStyleBackColor = true;
@@ -107,9 +108,9 @@
             // 
             // MainColorButton
             // 
-            this.MainColorButton.Location = new System.Drawing.Point(906, 13);
+            this.MainColorButton.Location = new System.Drawing.Point(880, 13);
             this.MainColorButton.Name = "MainColorButton";
-            this.MainColorButton.Size = new System.Drawing.Size(346, 23);
+            this.MainColorButton.Size = new System.Drawing.Size(300, 23);
             this.MainColorButton.TabIndex = 7;
             this.MainColorButton.Text = "Select Main Color";
             this.MainColorButton.UseVisualStyleBackColor = true;
@@ -125,7 +126,7 @@
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(1258, 12);
+            this.SaveButton.Location = new System.Drawing.Point(1186, 13);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(75, 23);
             this.SaveButton.TabIndex = 9;
@@ -133,11 +134,22 @@
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
+            // CopyCodeButton
+            // 
+            this.CopyCodeButton.Location = new System.Drawing.Point(1268, 13);
+            this.CopyCodeButton.Name = "CopyCodeButton";
+            this.CopyCodeButton.Size = new System.Drawing.Size(75, 23);
+            this.CopyCodeButton.TabIndex = 10;
+            this.CopyCodeButton.Text = "Copy Code";
+            this.CopyCodeButton.UseVisualStyleBackColor = true;
+            this.CopyCodeButton.Click += new System.EventHandler(this.CopyCodeButton_Click);
+            // 
             // Designer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1391, 784);
+            this.Controls.Add(this.CopyCodeButton);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.Pointer);
             this.Controls.Add(this.MainColorButton);
@@ -152,6 +164,7 @@
             this.Name = "Designer";
             this.Text = "Designer";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Designer_FormClosing);
             this.Load += new System.EventHandler(this.Designer_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Designer_Paint);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Designer_MouseClick);
@@ -176,6 +189,7 @@
         private System.Windows.Forms.Button MainColorButton;
         private System.Windows.Forms.Label Pointer;
         private System.Windows.Forms.Button SaveButton;
+        private System.Windows.Forms.Button CopyCodeButton;
     }
 }
 
