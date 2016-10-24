@@ -116,32 +116,24 @@ namespace Designer
                 case Keys.Right:
                     e.IsInputKey = true;
                     s.Position = s.Position.Add (new Coordinate (5, 0));
-                    if (line != null)
-                        line.End = line?.End.Add (new Coordinate (5, 0));
                     SelectShape ();
                     Refresh ();
                     break;
                 case Keys.Left:
                     e.IsInputKey = true;
                     s.Position = s.Position.Add (new Coordinate (-5, 0));
-                    if (line != null)
-                        line.End = line?.End.Add (new Coordinate (-5, 0));
                     SelectShape ();
                     Refresh ();
                     break;
                 case Keys.Up:
                     e.IsInputKey = true;
                     s.Position = s.Position.Add (new Coordinate (0, -5));
-                    if (line != null)
-                        line.End = line?.End.Add (new Coordinate (0, -5));
                     SelectShape ();
                     Refresh ();
                     break;
                 case Keys.Down:
                     e.IsInputKey = true;
                     s.Position = s.Position.Add (new Coordinate (0, 5));
-                    if (line != null)
-                        line.End = line?.End.Add (new Coordinate (0, 5));
                     SelectShape ();
                     Refresh ();
                     break;
@@ -177,10 +169,14 @@ namespace Designer
                     Refresh ();
                     break;
                 case Keys.T:
-                    if (!(s is Polygon))
+                    if (!(s is Polygon || s is Line))
                         break;
                     e.IsInputKey = true;
-                    ((Polygon) s).TurningAngle += 5;
+                    if (line != null)
+                        line.Rotation += 5;
+                    else
+                        ((Polygon) s).Rotation += 5;
+                    SelectShape();
                     Refresh ();
                     break;
             }

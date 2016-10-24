@@ -22,7 +22,7 @@ namespace Designer
                 var polygon = shape as Polygon;
                 if (polygon != null)
                     fin +=
-                        $"new Polygon({polygon.AngleCount}, {polygon.Width}, {GetColourString(polygon.LineColour)}, {GetCoordinate(shape.Position)}, {GetCoordinate(shape.Size)}, {GetColourString(shape.MainColour)}, {polygon.TurningAngle}),";
+                        $"new Polygon({polygon.AngleCount}, {polygon.Width}, {GetColourString(polygon.LineColour)}, {GetCoordinate(shape.Position)}, {GetCoordinate(shape.Size)}, {GetColourString(shape.MainColour)}, {polygon.Rotation}),";
                 var rectangle = shape as Painting.Types.Paint.Rectangle;
                 if (rectangle != null)
                     fin +=

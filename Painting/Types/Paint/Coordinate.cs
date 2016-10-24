@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Xml.Schema;
 
 namespace Painting.Types.Paint
 {
@@ -55,6 +56,8 @@ namespace Painting.Types.Paint
 
         public Coordinate Div (double d) => new Coordinate(X / (float) d, Y / (float)d);
         public Coordinate Div (Coordinate d) => new Coordinate(X / d.X, Y / d.Y);
+
+        public float Pyth() => (float) Math.Sqrt(X*X + Y*Y);
 
         public PointF GetPointF() => new PointF(X, Y);
     }

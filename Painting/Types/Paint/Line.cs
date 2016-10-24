@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using PhysomatikLibrary;
 
 namespace Painting.Types.Paint
 {
@@ -15,13 +16,36 @@ namespace Painting.Types.Paint
             set
             {
                 _end = value;
-                if (Position != null && value != null && !Size.Equals(End.Sub(Position)))
-                    Size = End.Sub (Position);
+                if (Position == null || value == null) return;
+                if (!Size.Equals(End.Sub(Position)))
+                    Size = End.Sub(Position);
+                if (Size == null)
+                    return;
+                var n = (float)Physomatik.ToDegree(Math.Asin(Size.Y/Length));
+                if (Size.X < 0)
+                    n = 180 - n;
+                if (Math.Abs(Rotation - n) > 0.001)
+                    Rotation = n;
+            }
+        }
+
+        public float Rotation
+        {
+            get { return _rotation; }
+            set
+            {
+                _rotation = value;
+                if (Position == null || End == null || Size == null) return;
+                var n = new Coordinate((float) Math.Cos(Physomatik.ToRadian(value)) * Length,
+                    (float) Math.Sin(Physomatik.ToRadian(value))*Length).Add(Position);
+                if (!End.Equals(n))
+                    End = n;
             }
         }
 
         private Coordinate _position;
         private Coordinate _size;
+        private float _rotation;
 
         public override Coordinate Position
         {
@@ -37,15 +61,16 @@ namespace Painting.Types.Paint
             }
         }
 
+        public float Length => Size.Pyth();
+
         public override Coordinate Size
         {
             get { return _size; }
             set
             {
-
+                _size = value;
                 if (Size != null && End != null && !End.Equals (Position.Add (Size)))
                     End = Position.Add (Size);
-                _size = value;
             }
         }
 
