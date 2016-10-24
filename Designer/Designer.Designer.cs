@@ -33,7 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.AddButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.Width = new System.Windows.Forms.NumericUpDown();
+            this.LineWidth = new System.Windows.Forms.NumericUpDown();
             this.ColorPicker = new System.Windows.Forms.ColorDialog();
             this.LineColourBuuton = new System.Windows.Forms.Button();
             this.MainColorButton = new System.Windows.Forms.Button();
@@ -41,7 +41,7 @@
             this.SaveButton = new System.Windows.Forms.Button();
             this.CopyCodeButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Edges)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Width)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LineWidth)).BeginInit();
             this.SuspendLayout();
             // 
             // SelectableShapes
@@ -89,12 +89,12 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Width";
             // 
-            // Width
+            // LineWidth
             // 
-            this.Width.Location = new System.Drawing.Point(366, 16);
-            this.Width.Name = "Width";
-            this.Width.Size = new System.Drawing.Size(120, 20);
-            this.Width.TabIndex = 5;
+            this.LineWidth.Location = new System.Drawing.Point(366, 16);
+            this.LineWidth.Name = "LineWidth";
+            this.LineWidth.Size = new System.Drawing.Size(120, 20);
+            this.LineWidth.TabIndex = 5;
             // 
             // LineColourBuuton
             // 
@@ -154,7 +154,7 @@
             this.Controls.Add(this.Pointer);
             this.Controls.Add(this.MainColorButton);
             this.Controls.Add(this.LineColourBuuton);
-            this.Controls.Add(this.Width);
+            this.Controls.Add(this.LineWidth);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.AddButton);
             this.Controls.Add(this.label1);
@@ -168,9 +168,13 @@
             this.Load += new System.EventHandler(this.Designer_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Designer_Paint);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Designer_MouseClick);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Designer_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Designer_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Designer_MouseUp);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Designer_PreviewKeyDown);
+            this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.Designer_MouseWheel);
             ((System.ComponentModel.ISupportInitialize)(this.Edges)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Width)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LineWidth)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -183,7 +187,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown Width;
+        private System.Windows.Forms.NumericUpDown LineWidth;
         private System.Windows.Forms.ColorDialog ColorPicker;
         private System.Windows.Forms.Button LineColourBuuton;
         private System.Windows.Forms.Button MainColorButton;
