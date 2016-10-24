@@ -115,25 +115,25 @@ namespace Designer
             {
                 case Keys.Right:
                     e.IsInputKey = true;
-                    s.Position = s.Position.Add (new Coordinate (5, 0));
+                    s.Position = s.Position.Add (new Coordinate (e.Shift ? 1 : 5, 0));
                     SelectShape ();
                     Refresh ();
                     break;
                 case Keys.Left:
                     e.IsInputKey = true;
-                    s.Position = s.Position.Add (new Coordinate (-5, 0));
+                    s.Position = s.Position.Add (new Coordinate (e.Shift ? -1 : -5, 0));
                     SelectShape ();
                     Refresh ();
                     break;
                 case Keys.Up:
                     e.IsInputKey = true;
-                    s.Position = s.Position.Add (new Coordinate (0, -5));
+                    s.Position = s.Position.Add (new Coordinate (0, e.Shift ? -1 : -5));
                     SelectShape ();
                     Refresh ();
                     break;
                 case Keys.Down:
                     e.IsInputKey = true;
-                    s.Position = s.Position.Add (new Coordinate (0, 5));
+                    s.Position = s.Position.Add (new Coordinate (0, e.Shift ? 1 : 5));
                     SelectShape ();
                     Refresh ();
                     break;
@@ -146,25 +146,25 @@ namespace Designer
                     break;
                 case Keys.D:
                     e.IsInputKey = true;
-                    s.Size = s.Size.Add (new Coordinate (5, 0));
+                    s.Size = s.Size.Add (new Coordinate (e.Shift ? 1 : 5, 0));
                     SelectShape ();
                     Refresh ();
                     break;
                 case Keys.S:
                     e.IsInputKey = true;
-                    s.Size = s.Size.Add (new Coordinate (0, 5));
+                    s.Size = s.Size.Add (new Coordinate (0, e.Shift ? 1 : 5));
                     SelectShape ();
                     Refresh ();
                     break;
                 case Keys.A:
                     e.IsInputKey = true;
-                    s.Size = s.Size.Add (new Coordinate (-5, 0));
+                    s.Size = s.Size.Add (new Coordinate (e.Shift ? -1 : -5, 0));
                     SelectShape ();
                     Refresh ();
                     break;
                 case Keys.W:
                     e.IsInputKey = true;
-                    s.Size = s.Size.Add (new Coordinate (0, -5));
+                    s.Size = s.Size.Add (new Coordinate (0, e.Shift ? -1 : -5));
                     SelectShape ();
                     Refresh ();
                     break;
@@ -173,9 +173,9 @@ namespace Designer
                         break;
                     e.IsInputKey = true;
                     if (line != null)
-                        line.Rotation += 5;
+                        line.Rotation += e.Shift ? 1 : 5;
                     else
-                        ((Polygon) s).Rotation += 5;
+                        ((Polygon) s).Rotation += e.Shift ? 1 : 5;
                     SelectShape();
                     Refresh ();
                     break;
