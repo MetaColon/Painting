@@ -114,4 +114,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Designer_Designer_FormClosing_Do_you_want_to_save_your_latest_Changes_" xml:space="preserve">
+    <value>Do you want to save your latest Changes?</value>
+  </data>
+  <data name="Designer_Designer_FormClosing_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Designer_LineColor_Select_Line_Color__" xml:space="preserve">
+    <value>Select Line Color (</value>
+  </data>
+  <data name="Designer_MainColor_Select_Main_Color__" xml:space="preserve">
+    <value>Select Main Color (</value>
+  </data>
+  <data name="Designer_SelectShape___" xml:space="preserve">
+    <value>&lt;-</value>
+  </data>
 </root>

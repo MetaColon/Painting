@@ -5,16 +5,16 @@ namespace Painting.Types.Paint
 {
     public class Pixel
     {
-        public Colour PixelColour { get; set; }
-        public Coordinate Coordinate { get; set; }
-        public float Size { get; set; }
-
         public Pixel(Colour pixelColour, Coordinate coordinate, float size)
         {
             PixelColour = pixelColour;
             Coordinate = coordinate;
             Size = size;
         }
+
+        public Colour PixelColour { get; set; }
+        public Coordinate Coordinate { get; set; }
+        public float Size { get; set; }
 
         public override bool Equals(object obj) => obj is Pixel && Equals((Pixel) obj);
 
@@ -29,7 +29,10 @@ namespace Painting.Types.Paint
             }
         }
 
-        protected bool Equals(Pixel other) => other != null && PixelColour.Equals(other.PixelColour) && Coordinate.Equals(other.Coordinate) && Math.Abs(Size - other.Size) < 0.001;
+        protected bool Equals(Pixel other)
+            =>
+            (other != null) && PixelColour.Equals(other.PixelColour) && Coordinate.Equals(other.Coordinate) &&
+            (Math.Abs(Size - other.Size) < 0.001);
 
         public void Paint(Graphics p)
         {

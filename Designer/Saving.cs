@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using Painting.Types.Paint;
+﻿using Painting.Types.Paint;
 
 namespace Designer
 {
@@ -23,7 +21,7 @@ namespace Designer
                 if (polygon != null)
                     fin +=
                         $"new Polygon({polygon.AngleCount}, {polygon.Width}, {GetColourString(polygon.LineColour)}, {GetCoordinate(shape.Position)}, {GetCoordinate(shape.Size)}, {GetColourString(shape.MainColour)}, {polygon.Rotation}),";
-                var rectangle = shape as Painting.Types.Paint.Rectangle;
+                var rectangle = shape as Rectangle;
                 if (rectangle != null)
                     fin +=
                         $"new Rectangle({rectangle.Width}, {GetColourString(rectangle.LineColour)}, {GetCoordinate(shape.Position)}, {GetCoordinate(shape.Size)}, {GetColourString(shape.MainColour)}),";

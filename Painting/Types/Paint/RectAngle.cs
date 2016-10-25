@@ -5,15 +5,15 @@ namespace Painting.Types.Paint
 {
     public class Rectangle : Shape
     {
-        public float Width { get; set; }
-        public Colour LineColour { get; set; }
-
         public Rectangle(float width, Colour lineColour, Coordinate position, Coordinate size, Colour mainColour)
-            : base (position, size, mainColour)
+            : base(position, size, mainColour)
         {
             Width = width;
             LineColour = lineColour;
         }
+
+        public float Width { get; set; }
+        public Colour LineColour { get; set; }
 
         public override bool Equals(object obj) => obj is Rectangle && Equals((Rectangle) obj);
 
@@ -28,14 +28,17 @@ namespace Painting.Types.Paint
             }
         }
 
-        protected bool Equals(Rectangle other) => other != null && base.Equals(other) && Math.Abs(Width - other.Width) < 0.001 && Equals(LineColour, other.LineColour);
+        protected bool Equals(Rectangle other)
+            =>
+            (other != null) && base.Equals(other) && (Math.Abs(Width - other.Width) < 0.001) &&
+            Equals(LineColour, other.LineColour);
 
         public void Paint(Graphics p)
         {
-                if (MainColour.Visible)
-                    p.FillRectangle(new SolidBrush(MainColour.Color), Position.X, Position.Y, Size.X, Size.Y);
-                if (LineColour.Visible)
-                    p.DrawRectangle(new Pen(LineColour.Color, Width), Position.X, Position.Y, Size.X, Size.Y);
+            if (MainColour.Visible)
+                p.FillRectangle(new SolidBrush(MainColour.Color), Position.X, Position.Y, Size.X, Size.Y);
+            if (LineColour.Visible)
+                p.DrawRectangle(new Pen(LineColour.Color, Width), Position.X, Position.Y, Size.X, Size.Y);
         }
     }
 }

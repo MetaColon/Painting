@@ -4,19 +4,21 @@ namespace Painting.Types.Paint
 {
     public class DefinedShape : Shape
     {
-        public Pixel[,] Pixels { get; set; }
-
-        public DefinedShape(Pixel[,] pixels, Coordinate size, Coordinate position, Colour mainColour) : base (position, size, mainColour)
+        public DefinedShape(Pixel[,] pixels, Coordinate size, Coordinate position, Colour mainColour)
+            : base(position, size, mainColour)
         {
             Pixels = pixels;
         }
+
+        public Pixel[,] Pixels { get; set; }
 
         public override bool Equals(object obj)
         {
             return base.Equals(obj);
         }
 
-        protected bool Equals(DefinedShape other) => other != null && base.Equals(other) && Equals(Pixels, other.Pixels);
+        protected bool Equals(DefinedShape other)
+            => (other != null) && base.Equals(other) && Equals(Pixels, other.Pixels);
 
         public override int GetHashCode()
         {
@@ -32,7 +34,7 @@ namespace Painting.Types.Paint
         {
             for (var y = 0; y < Pixels.GetLength(0); y++)
                 for (var x = 0; x < Pixels.GetLength(1); x++)
-                    Pixels[x,y].Paint(p);
+                    Pixels[x, y].Paint(p);
         }
     }
 }

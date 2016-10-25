@@ -148,7 +148,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1391, 784);
+            this.ClientSize = new System.Drawing.Size(1452, 819);
             this.Controls.Add(this.CopyCodeButton);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.Pointer);
@@ -171,8 +171,8 @@
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Designer_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Designer_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Designer_MouseUp);
-            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Designer_PreviewKeyDown);
             this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.Designer_MouseWheel);
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Designer_PreviewKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.Edges)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LineWidth)).EndInit();
             this.ResumeLayout(false);

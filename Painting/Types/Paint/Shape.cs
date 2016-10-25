@@ -1,10 +1,10 @@
-﻿using System.Drawing;
-
-namespace Painting.Types.Paint
+﻿namespace Painting.Types.Paint
 {
     public class Shape
     {
-        public Shape () { }
+        public Shape()
+        {
+        }
 
         public Shape(Coordinate position, Coordinate size, Colour mainColour)
         {
@@ -13,9 +13,14 @@ namespace Painting.Types.Paint
             MainColour = mainColour;
         }
 
+        public virtual Colour MainColour { get; set; }
+        public virtual Coordinate Position { get; set; }
+
+        public virtual Coordinate Size { get; set; } //If avoidable, don't change the size :)
+
         protected bool Equals(Shape other)
             =>
-            other != null && Equals(Size, other.Size) && Equals(Position, other.Position) &&
+            (other != null) && Equals(Size, other.Size) && Equals(Position, other.Position) &&
             Equals(MainColour, other.MainColour);
 
         public override bool Equals(object obj) => obj is Shape && Equals((Shape) obj);
@@ -31,14 +36,9 @@ namespace Painting.Types.Paint
 
         public override string ToString() => $"Position: {Position}; Size:{Size}";
 
-        public virtual Colour MainColour { get; set; }
-        public virtual Coordinate Position { get; set; }
-
-        public virtual Coordinate Size { get; set; } //If avoidable, don't change the size :)
-
         public bool IsCoordinateInThis(Coordinate coordinate)
             =>
-            coordinate.X >= Position.X && coordinate.X <= Position.X + Size.X && coordinate.Y >= Position.Y &&
-            coordinate.Y <= Position.Y + Size.Y;
+            (coordinate.X >= Position.X) && (coordinate.X <= Position.X + Size.X) && (coordinate.Y >= Position.Y) &&
+            (coordinate.Y <= Position.Y + Size.Y);
     }
 }
