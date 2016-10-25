@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using PhysomatikLibrary;
+using Painting.Util;
 
 namespace Painting.Types.Paint
 {

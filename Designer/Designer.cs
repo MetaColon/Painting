@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -65,6 +66,7 @@ namespace Designer
                 default:
                     throw new Exception ("Unselectable Item selected");
             }
+            SelectShape();
             Refresh ();
             LineColor = Color.Empty;
             MainColor = Color.Empty;
@@ -74,7 +76,10 @@ namespace Designer
         {
             if (s is Polygon && Edges.Value < 2 || MainColor.IsEmpty && LineColor.IsEmpty || LineWidth.Value < 1 && MainColor.IsEmpty)
                 return;
-            Collection.Shapes = new List<Shape> (new List<Shape> (Collection.Shapes) { s });
+            Collection.Shapes = new ObservableCollection<Shape> (new List<Shape> (Collection.Shapes));
+            Collection.Shapes.Insert(0, s);
+            _selectedShapeInViewIndex = 0;
+            _selectedDraggingShapeIndex = new[]{-1,-1,-1};
         }
 
         private void CopyCodeButton_Click (object sender, EventArgs e) => Clipboard.SetText (Saving.GetSaveCode (Collection));
@@ -227,6 +232,22 @@ namespace Designer
                     _layerIndex = _layerIndex == 0 ? 1 : 0;
                     _selectedShapeInViewIndex = GetClickedItem (MousePosition.X, MousePosition.Y);
                     SelectShape ();
+                    Refresh();
+                    break;
+                case Keys.F:
+                    e.IsInputKey = true;
+                    if (_selectedShapeInViewIndex < 1 || _selectedShapeInViewIndex > Collection.Shapes.Count)
+                        break;
+                    Collection.Shapes.Move(_selectedShapeInViewIndex, _selectedShapeInViewIndex-=1);
+                    SelectShape();
+                    Refresh();
+                    break;
+                case Keys.B:
+                    e.IsInputKey = true;
+                    if (_selectedShapeInViewIndex < 0 || _selectedShapeInViewIndex >= Collection.Shapes.Count)
+                        break;
+                    Collection.Shapes.Move(_selectedShapeInViewIndex, _selectedShapeInViewIndex+=1);
+                    SelectShape();
                     Refresh();
                     break;
             }

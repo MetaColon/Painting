@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using PhysomatikLibrary;
+using Painting.Util;
 
 namespace Painting.Types.Paint
 {

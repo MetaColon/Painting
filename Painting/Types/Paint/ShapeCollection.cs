@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 
@@ -6,7 +7,7 @@ namespace Painting.Types.Paint
 {
     public class ShapeCollection : Shape
     {
-        public List<Shape> Shapes { get; set; }
+        public ObservableCollection<Shape> Shapes { get; set; }
 
         private Coordinate _position;
         public override Coordinate Position
@@ -44,12 +45,12 @@ namespace Painting.Types.Paint
                 shapes.Select (shape => shape.Size).Max (), shapes.FirstOrDefault (shape => shape.MainColour.Visible)?.MainColour)
 
         {
-            Shapes = new List<Shape> (shapes);
+            Shapes = new ObservableCollection<Shape> (shapes);
         }
 
         public void Paint (Graphics p)
         {
-            foreach (var shape in Shapes)
+            foreach (var shape in Shapes.Reverse())
             {
                 (shape as Ellipse)?.Paint (p);
                 (shape as DefinedPolygon)?.Paint (p);
