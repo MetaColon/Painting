@@ -1,4 +1,6 @@
-﻿namespace Designer
+﻿using Painting.Types.Paint;
+
+namespace Designer
 {
     partial class Designer
     {
@@ -167,7 +169,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Designer_FormClosing);
             this.Load += new System.EventHandler(this.Designer_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Designer_Paint);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Designer_MouseClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Designer_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Designer_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Designer_MouseUp);

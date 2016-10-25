@@ -145,10 +145,6 @@ namespace Designer
                 control.PreviewKeyDown += Designer_PreviewKeyDown;
         }
 
-        private void Designer_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
         private void Designer_MouseDown(object sender, MouseEventArgs e)
         {
             _selectedShapeInViewIndex = GetClickedItem(e);
@@ -311,7 +307,10 @@ namespace Designer
         }
 
         private void SelectableShapes_SelectedIndexChanged(object sender, EventArgs e)
-            => Edges.Enabled = Items[SelectableShapes.SelectedIndex] == "Polygon";
+        {
+            Edges.Enabled = Items[SelectableShapes.SelectedIndex] == "Polygon";
+            MainColorButton.Enabled = Items[SelectableShapes.SelectedIndex] != "Line";
+        }
 
         private void SelectShape()
         {
