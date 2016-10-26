@@ -24,28 +24,28 @@ namespace Painting.Util
         }
 
         public static double[] GetNewPos(double[] v, double[] pos, double step)
-            => new double[2] {pos[0] + GetXPart(v)*step, pos[1] + GetYPart(v)*step};
+            => new[] {pos[0] + GetXPart(v)*step, pos[1] + GetYPart(v)*step};
 
         public static double[] GetNewSpeedAfterImpact(double[] v0, double step, double c_w, double A, double P, double m,
             double g, double t, double f, double angle)
         {
             double vx = GetXPart(v0), vy = GetYPart(v0);
-            var F = GetF(getParts(v0[0], (v0[1] + 180)%360, (angle + 90)%360, angle)[0, 0], t, m);
-            var F_N = getF_N(angle, m, g) + getParts(F, (v0[1] + 180)%360, (angle + 90)%360, angle)[0, 0];
+            var F = GetF(GetParts(v0[0], (v0[1] + 180)%360, (angle + 90)%360, angle)[0, 0], t, m);
+            var F_N = getF_N(angle, m, g) + GetParts(F, (v0[1] + 180)%360, (angle + 90)%360, angle)[0, 0];
             var F_H = getF_H(angle, m, g);
             var F_L = getF_L(c_w, A, P, v0[0]);
             var F_R = getF_R(f, F_N);
             var F_Resa =
-                GetResVector(new double[3, 2]
+                GetResVector(new[,]
                     {{F_H, (angle + 180)%360}, {F_L, (v0[1] + 180)%360}, {F_R, (v0[1] + 180)%360}});
-            var F_Res = new double[2]
+            var F_Res = new[]
             {
-                getParts(F_Resa[0], F_Resa[1], angle, angle + 90)[0, 0],
-                getParts(F_Resa[0], F_Resa[1], angle, angle + 90)[0, 1]
+                GetParts(F_Resa[0], F_Resa[1], angle, angle + 90)[0, 0],
+                GetParts(F_Resa[0], F_Resa[1], angle, angle + 90)[0, 1]
             };
             vx += GetXPart(F_Res)/m*step;
             vy += GetYPart(F_Res)/m*step;
-            return GetResVector(new double[2, 2] {{vx, 0}, {vy, 90}});
+            return GetResVector(new[,] {{vx, 0}, {vy, 90}});
         }
 
         public static double[] GetNewSpeedAfterImpactM(double[] v0, double step, double c_w, double A, double P,
@@ -57,7 +57,7 @@ namespace Painting.Util
                 vx += GetA(-f*fN - getF_L(c_w, A, P, vx), m)*step;
             else
                 vx += GetA(+f*fN + getF_L(c_w, A, P, vx), m)*step;
-            return GetResVector(new double[2, 2] {{vx, 0}, {0, 90}});
+            return GetResVector(new[,] {{vx, 0}, {0, 90}});
         }
 
         public static List<double[]> GetSimulatedPossesFromFile(string filePath)
@@ -74,7 +74,7 @@ namespace Painting.Util
         public static double[] StringToDoubles(string content)
         {
             var splitted = content.Split(',');
-            return new double[2] {Convert.ToDouble(splitted[0]), Convert.ToDouble(splitted[1])};
+            return new[] {Convert.ToDouble(splitted[0]), Convert.ToDouble(splitted[1])};
         }
 
         public static List<string> ToListByBrackets(List<char> listi)
@@ -133,15 +133,15 @@ namespace Painting.Util
                 double P, double t, double t_throw, double step)
             //you should use this part if you forgot your current position/speed
         {
-            double F_G = getF_G(m, g), F_L = 0;
-            double[] v = new double[2] {0, 0}, F_res = new double[2];
+            var F_G = getF_G(m, g);
+            double[] v = {0, 0};
             for (double i = 0; i < t; i += step)
             {
-                F_L = getF_L(c_w, A, P, v[0]);
+                var F_L = getF_L(c_w, A, P, v[0]);
                 var Fs = i <= t_throw
-                    ? new double[3, 2] {{F_G, 270}, {F_Wurf, angle_Wurf}, {F_L, (v[1] + 180)%360}}
-                    : new double[2, 2] {{F_G, 270}, {F_L, (v[1] + 180)%360}};
-                F_res = GetResVector(Fs);
+                    ? new[,] {{F_G, 270}, {F_Wurf, angle_Wurf}, {F_L, (v[1] + 180)%360}}
+                    : new[,] {{F_G, 270}, {F_L, (v[1] + 180)%360}};
+                var F_res = GetResVector(Fs);
                 v = GetNewSpeed(v, F_res, step, m);
             }
             return v;
@@ -164,11 +164,11 @@ namespace Painting.Util
                 double step, double[] oldpos, double[] oldv)
             //this gives you a new position/speed - it's stepwise because air is bad
         {
-            var vectors = new double[3, 2]
+            var vectors = new[,]
                 {{F_Wurf[0], F_Wurf[1]}, {getF_G(m, g), 270}, {getF_L(c_w, A, P, oldv[0]), (oldv[1] + 180)%360}};
             var newSpeed = GetNewSpeed(oldv, GetResVector(vectors), step, m);
-            var pos = new double[2] {GetXPart(newSpeed)*step + oldpos[0], GetYPart(newSpeed)*step + oldpos[1]};
-            return new double[2, 2] {{pos[0], pos[1]}, {newSpeed[0], newSpeed[1]}};
+            var pos = new[] {GetXPart(newSpeed)*step + oldpos[0], GetYPart(newSpeed)*step + oldpos[1]};
+            return new[,] {{pos[0], pos[1]}, {newSpeed[0], newSpeed[1]}};
         }
 
         public static double[] GetPosAtShotWithS(double F_Wurf, double angle_Wurf, double m, double g, double c_w,
@@ -178,7 +178,7 @@ namespace Painting.Util
             var t_throw = t;
             for (double i = 0; i < t; i += step)
             {
-                if ((Math.Sqrt(pos[0]*pos[0] + pos[1]*pos[1]) > s_throw) && (t_throw == t))
+                if ((Math.Sqrt(pos[0]*pos[0] + pos[1]*pos[1]) > s_throw) && (Math.Abs(t_throw - t) < 0.001))
                     t_throw = i;
                 speed = GetSpeedAtShot(F_Wurf, angle_Wurf, m, g, c_w, A, P, i, t_throw, step);
                 pos[0] += GetXPart(speed)*step;
@@ -207,17 +207,17 @@ namespace Painting.Util
 
         public static double[,] GetXParts(double res, double resangle, double angle1, double angle2)
         {
-            return new double[2, 2]
+            return new[,]
             {
                 {GetOneXPart(res, resangle, angle2, angle1), angle1},
                 {GetOneXPart(res, resangle, angle1, angle2), angle2}
             };
         }
 
-        public static double[,] getParts(double res, double resangle, double angle1, double angle2)
+        public static double[,] GetParts(double res, double resangle, double angle1, double angle2)
         {
             var xParts = GetXParts(res, resangle, angle1, angle2);
-            return new double[2, 2]
+            return new[,]
             {
                 {xParts[0, 0]/Math.Cos(ToRadian(xParts[0, 1])), xParts[0, 1]},
                 {xParts[1, 0]/Math.Cos(ToRadian(xParts[1, 1])), xParts[1, 1]}
@@ -260,7 +260,7 @@ namespace Painting.Util
         public static double[] GetNewPosAtHill(double f, double angle, double m, double g, double F_S, double step,
             double[] v0, double c_w, double A, double P, double[] pos0)
         {
-            var newpos = new double[2] {pos0[0], pos0[1]};
+            var newpos = new[] {pos0[0], pos0[1]};
             var newspeed = GetNewSpeedAtHill(f, angle, m, g, F_S, step, v0, c_w, A, P);
             newpos[0] += GetXPart(new[] {newspeed*step, angle});
             newpos[1] += GetYPart(new[] {newspeed*step, angle});
@@ -270,9 +270,9 @@ namespace Painting.Util
         public static double[,] GetNewPos_SpeedAtHill(double f, double angle, double m, double g, double F_S,
             double step, double[] v0, double c_w, double A, double P, double[] pos0)
         {
-            var newSpeed = new double[2] {GetNewSpeedAtHill(f, angle, m, g, F_S, step, v0, c_w, A, P), angle};
+            var newSpeed = new[] {GetNewSpeedAtHill(f, angle, m, g, F_S, step, v0, c_w, A, P), angle};
             if (!(newSpeed[0] < 0))
-                return new double[2, 2]
+                return new[,]
                 {
                     {
                         GetNewPosAtHill(f, angle, m, g, F_S, step, v0, c_w, A, P, pos0)[0],
@@ -282,7 +282,7 @@ namespace Painting.Util
                 };
             newSpeed[0] *= -1;
             newSpeed[1] = (newSpeed[1] + 180)%360;
-            return new double[2, 2]
+            return new[,]
             {
                 {
                     GetNewPosAtHill(f, angle, m, g, F_S, step, v0, c_w, A, P, pos0)[0],
@@ -298,7 +298,7 @@ namespace Painting.Util
 
         public static double[] GetNewSpeed(double[] vectorv, double[] F, double dt, double m)
             //returns the new Speed in relativity to the old one
-            => GetResVector(new double[2, 2]
+            => GetResVector(new[,]
             {
                 {GetNewSpeed(GetXPart(vectorv), GetXPart(F), dt, m), 0},
                 {GetNewSpeed(GetYPart(vectorv), GetYPart(F), dt, m), 90}

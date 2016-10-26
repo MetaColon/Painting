@@ -33,13 +33,13 @@ namespace Designer
                 "Polygon",
                 "Rectangle"
             };
-            SelectableShapes.DataSource = new BindingSource {DataSource = Items};
+            SelectableShapes.DataSource = new BindingSource { DataSource = Items };
             SelectableShapes.DropDownStyle = ComboBoxStyle.DropDownList;
             Collection = new ShapeCollection(new List<Shape>());
             MainColor = Color.Empty;
             LineColor = Color.Empty;
             _selectedShapeInViewIndex = -1;
-            _selectedDraggingShapeIndex = new[] {-1, -1, -1};
+            _selectedDraggingShapeIndex = new[] { -1, -1, -1 };
             _layerIndex = 0;
         }
 
@@ -50,9 +50,7 @@ namespace Designer
             {
                 _lineColor = value;
                 LineColourBuuton.Text = Resources.Designer_LineColor_Select_Line_Color__ +
-                                        (!value.IsEmpty
-                                            ? $"{value.ToString().Split('[').Last().Split(']').First()})"
-                                            : "Invisible)");
+                                        Util.GetColorString(value);
             }
         }
 
@@ -63,9 +61,7 @@ namespace Designer
             {
                 _mainColor = value;
                 MainColorButton.Text = Resources.Designer_MainColor_Select_Main_Color__ +
-                                       (!value.IsEmpty
-                                           ? $"{value.ToString().Split('[').Last().Split(']').First()})"
-                                           : "Invisible)");
+                                       Util.GetColorString(value);
             }
         }
 
@@ -75,27 +71,27 @@ namespace Designer
             {
                 case "Ellipse":
                     AddShape(
-                        new Ellipse((int) LineWidth.Value,
-                            !LineColor.IsEmpty ? new Colour(LineColor) : Colour.Invisible(),
+                        new Ellipse((int)LineWidth.Value,
+                            Util.GetColourToColor(LineColor),
                             new Coordinate(100, 100), new Coordinate(100, 100),
-                            !MainColor.IsEmpty ? new Colour(MainColor) : Colour.Invisible()));
+                            Util.GetColourToColor(MainColor)));
                     break;
                 case "Line":
                     AddShape(
                         new Line(new Coordinate(100, 100), new Coordinate(200, 200),
-                            !LineColor.IsEmpty ? new Colour(LineColor) : Colour.Invisible(), (int) LineWidth.Value));
+                            Util.GetColourToColor(LineColor), (int)LineWidth.Value));
                     break;
                 case "Polygon":
                     AddShape(
-                        new Polygon((int) Edges.Value, (int) LineWidth.Value,
-                            !LineColor.IsEmpty ? new Colour(LineColor) : Colour.Invisible(), new Coordinate(100, 100),
-                            new Coordinate(100, 100), !MainColor.IsEmpty ? new Colour(MainColor) : Colour.Invisible(), 0));
+                        new Polygon((int)Edges.Value, (int)LineWidth.Value,
+                            Util.GetColourToColor(LineColor), new Coordinate(100, 100),
+                            new Coordinate(100, 100), Util.GetColourToColor(MainColor), 0));
                     break;
                 case "Rectangle":
                     AddShape(
-                        new Rectangle((int) LineWidth.Value,
-                            !LineColor.IsEmpty ? new Colour(LineColor) : Colour.Invisible(), new Coordinate(100, 100),
-                            new Coordinate(100, 100), !MainColor.IsEmpty ? new Colour(MainColor) : Colour.Invisible()));
+                        new Rectangle((int)LineWidth.Value,
+                            Util.GetColourToColor(LineColor), new Coordinate(100, 100),
+                            new Coordinate(100, 100), Util.GetColourToColor(MainColor)));
                     break;
                 default:
                     throw new Exception("Unselectable Item selected");
@@ -114,7 +110,7 @@ namespace Designer
             Collection.Shapes = new ObservableCollection<Shape>(new List<Shape>(Collection.Shapes));
             Collection.Shapes.Insert(0, s);
             _selectedShapeInViewIndex = 0;
-            _selectedDraggingShapeIndex = new[] {-1, -1, -1};
+            _selectedDraggingShapeIndex = new[] { -1, -1, -1 };
         }
 
         private void CopyCodeButton_Click(object sender, EventArgs e)
@@ -150,7 +146,7 @@ namespace Designer
             _selectedShapeInViewIndex = GetClickedItem(e);
             SelectShape();
             if (_selectedShapeInViewIndex == -1)
-                _selectedDraggingShapeIndex = new[] {-1, -1, -1};
+                _selectedDraggingShapeIndex = new[] { -1, -1, -1 };
             else
                 _selectedDraggingShapeIndex = new[]
                 {
@@ -187,8 +183,8 @@ namespace Designer
             if (_selectedShapeInViewIndex < 0)
                 return;
             Collection.Shapes[_selectedShapeInViewIndex].Size =
-                Collection.Shapes[_selectedShapeInViewIndex].Size.Add(new Coordinate(e.Delta/(float) 15,
-                    e.Delta/(float) 15));
+                Collection.Shapes[_selectedShapeInViewIndex].Size.Add(new Coordinate(e.Delta / (float)15,
+                    e.Delta / (float)15));
             SelectShape();
             Refresh();
         }
@@ -201,73 +197,64 @@ namespace Designer
                 return;
             var s = Collection.Shapes[_selectedShapeInViewIndex];
             var line = s as Line;
+            var o = e.IsInputKey;
+            e.IsInputKey = true;
             switch (e.KeyCode)
             {
                 case Keys.Right:
-                    e.IsInputKey = true;
                     s.Position = s.Position.Add(new Coordinate(e.Shift ? 1 : 5, 0));
                     break;
                 case Keys.Left:
-                    e.IsInputKey = true;
                     s.Position = s.Position.Add(new Coordinate(e.Shift ? -1 : -5, 0));
                     break;
                 case Keys.Up:
-                    e.IsInputKey = true;
                     s.Position = s.Position.Add(new Coordinate(0, e.Shift ? -1 : -5));
                     break;
                 case Keys.Down:
-                    e.IsInputKey = true;
                     s.Position = s.Position.Add(new Coordinate(0, e.Shift ? 1 : 5));
                     break;
                 case Keys.Delete:
-                    e.IsInputKey = true;
                     _selectedShapeInViewIndex = -1;
                     Collection.Shapes.Remove(s);
                     break;
                 case Keys.D:
-                    e.IsInputKey = true;
                     s.Size = s.Size.Add(new Coordinate(e.Shift ? 1 : 5, 0));
                     break;
                 case Keys.S:
-                    e.IsInputKey = true;
                     s.Size = s.Size.Add(new Coordinate(0, e.Shift ? 1 : 5));
                     break;
                 case Keys.A:
-                    e.IsInputKey = true;
                     s.Size = s.Size.Add(new Coordinate(e.Shift ? -1 : -5, 0));
                     break;
                 case Keys.W:
-                    e.IsInputKey = true;
                     s.Size = s.Size.Add(new Coordinate(0, e.Shift ? -1 : -5));
                     break;
                 case Keys.T:
-                    e.IsInputKey = true;
                     if (!(s is Polygon || s is Line))
                         break;
                     if (line != null)
                         line.Rotation += e.Shift ? 1 : 5;
                     else
-                        ((Polygon) s).Rotation += e.Shift ? 1 : 5;
+                        ((Polygon)s).Rotation += e.Shift ? 1 : 5;
                     break;
                 case Keys.L:
-                    e.IsInputKey = true;
                     _layerIndex = _layerIndex == 0 ? 1 : 0;
                     _selectedShapeInViewIndex = GetClickedItem(MousePosition.X, MousePosition.Y);
                     break;
                 case Keys.F:
-                    e.IsInputKey = true;
                     if ((_selectedShapeInViewIndex < 1) || (_selectedShapeInViewIndex >= Collection.Shapes.Count))
                         break;
                     Collection.Shapes.Move(_selectedShapeInViewIndex, _selectedShapeInViewIndex -= 1);
                     break;
                 case Keys.B:
-                    e.IsInputKey = true;
-                    if ((_selectedShapeInViewIndex < 0) || (_selectedShapeInViewIndex >= Collection.Shapes.Count-1))
+                    if ((_selectedShapeInViewIndex < 0) || (_selectedShapeInViewIndex >= Collection.Shapes.Count - 1))
                         break;
                     Collection.Shapes.Move(_selectedShapeInViewIndex, _selectedShapeInViewIndex += 1);
                     break;
+                default:
+                    e.IsInputKey = o;
+                    return;
             }
-            if (!e.IsInputKey) return;
             SelectShape();
             Refresh();
         }
@@ -322,8 +309,8 @@ namespace Designer
             var sel = Collection.Shapes[_selectedShapeInViewIndex];
             var pos = sel.Position.Add(sel.Size.Div(new Coordinate(1, 2)).Add(new Coordinate(1, 1)));
             Pointer.Text = Resources.Designer_SelectShape___;
-            Pointer.Left = (int) Math.Ceiling(pos.X);
-            Pointer.Top = (int) Math.Ceiling(pos.Y);
+            Pointer.Left = (int)Math.Ceiling(pos.X);
+            Pointer.Top = (int)Math.Ceiling(pos.Y);
         }
     }
 }
