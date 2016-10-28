@@ -35,7 +35,7 @@ namespace Designer
             };
             SelectableShapes.DataSource = new BindingSource { DataSource = Items };
             SelectableShapes.DropDownStyle = ComboBoxStyle.DropDownList;
-            Collection = new ShapeCollection(new List<Shape>());
+            Collection = new ShapeCollection(new ObservableCollection<Shape>());
             MainColor = Color.Empty;
             LineColor = Color.Empty;
             _selectedShapeInViewIndex = -1;
@@ -74,7 +74,7 @@ namespace Designer
                         new Ellipse((int)LineWidth.Value,
                             Util.GetColourToColor(LineColor),
                             new Coordinate(100, 100), new Coordinate(100, 100),
-                            Util.GetColourToColor(MainColor)));
+                            Util.GetColourToColor(MainColor), 0f));
                     break;
                 case "Line":
                     AddShape(
@@ -189,7 +189,10 @@ namespace Designer
             Refresh();
         }
 
-        private void Designer_Paint(object sender, PaintEventArgs e) => Collection.Paint(e.Graphics);
+        private void Designer_Paint(object sender, PaintEventArgs e)
+        {
+            Collection.Paint(e.Graphics);
+        }
 
         private void Designer_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
@@ -230,12 +233,14 @@ namespace Designer
                     s.Size = s.Size.Add(new Coordinate(0, e.Shift ? -1 : -5));
                     break;
                 case Keys.T:
-                    if (!(s is Polygon || s is Line))
+                    if (!(s is Polygon || s is Line || s is Ellipse))
                         break;
                     if (line != null)
                         line.Rotation += e.Shift ? 1 : 5;
+                    else if (s is Polygon)
+                        ((Polygon) s).Rotation += e.Shift ? 1 : 5;
                     else
-                        ((Polygon)s).Rotation += e.Shift ? 1 : 5;
+                        ((Ellipse) s).Rotation += e.Shift ? 1 : 5;
                     break;
                 case Keys.L:
                     _layerIndex = _layerIndex == 0 ? 1 : 0;

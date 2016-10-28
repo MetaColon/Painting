@@ -20,8 +20,8 @@
 
         protected bool Equals(Shape other)
             =>
-            (other != null) && Equals(Size, other.Size) && Equals(Position, other.Position) &&
-            Equals(MainColour, other.MainColour);
+            (other != null) && Size.Equals(other.Size) && Position.Equals (other.Position) &&
+            MainColour.Equals(other.MainColour);
 
         public override bool Equals(object obj) => obj is Shape && Equals((Shape) obj);
 

@@ -335,5 +335,7 @@ namespace Painting.Util
         public static double ToDegree(double radian) => radian*180/Pi;
 
         #endregion
+
+        public static double Quadr (double x) => x * x;
     }
 }

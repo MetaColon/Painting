@@ -65,5 +65,7 @@ namespace Painting.Types.Paint
         public Coordinate Sub(Coordinate s) => Add(s.Mult(-1));
 
         public override string ToString() => $"X: {X}; Y:{Y}";
+
+        public bool Symmetric => Math.Abs(X - Y) < 0.001;
     }
 }
