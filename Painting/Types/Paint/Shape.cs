@@ -14,13 +14,14 @@
         }
 
         public virtual Colour MainColour { get; set; }
-        public virtual Coordinate Position { get; set; }
+        public virtual Coordinate Position { get;
+            set; }
 
         public virtual Coordinate Size { get; set; } //If avoidable, don't change the size :)
 
         protected bool Equals(Shape other)
             =>
-            (other != null) && Size.Equals(other.Size) && Position.Equals (other.Position) &&
+            (other != null) && Size != null && Size.Equals(other.Size) && Position != null && Position.Equals (other.Position) && MainColour != null &&
             MainColour.Equals(other.MainColour);
 
         public override bool Equals(object obj) => obj is Shape && Equals((Shape) obj);

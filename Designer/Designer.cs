@@ -85,7 +85,7 @@ namespace Designer
                     AddShape(
                         new Polygon((int)Edges.Value, (int)LineWidth.Value,
                             Util.GetColourToColor(LineColor), new Coordinate(100, 100),
-                            new Coordinate(100, 100), Util.GetColourToColor(MainColor), 0));
+                            new Coordinate(100, 100), Util.GetColourToColor(MainColor), 0, 0));
                     break;
                 case "Rectangle":
                     AddShape(
@@ -191,7 +191,7 @@ namespace Designer
 
         private void Designer_Paint(object sender, PaintEventArgs e)
         {
-            Collection.Paint(e.Graphics);
+            Collection.Paint(e.Graphics, Collection.Size.Div(2));
         }
 
         private void Designer_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -202,45 +202,51 @@ namespace Designer
             var line = s as Line;
             var o = e.IsInputKey;
             e.IsInputKey = true;
+            var dif = e.Shift ? 1 : 5;
             switch (e.KeyCode)
             {
                 case Keys.Right:
-                    s.Position = s.Position.Add(new Coordinate(e.Shift ? 1 : 5, 0));
+                    s.Position = s.Position.Add(new Coordinate(dif, 0));
                     break;
                 case Keys.Left:
-                    s.Position = s.Position.Add(new Coordinate(e.Shift ? -1 : -5, 0));
+                    s.Position = s.Position.Add(new Coordinate(-dif, 0));
                     break;
                 case Keys.Up:
-                    s.Position = s.Position.Add(new Coordinate(0, e.Shift ? -1 : -5));
+                    s.Position = s.Position.Add(new Coordinate(0, -dif));
                     break;
                 case Keys.Down:
-                    s.Position = s.Position.Add(new Coordinate(0, e.Shift ? 1 : 5));
+                    s.Position = s.Position.Add(new Coordinate(0, dif));
                     break;
                 case Keys.Delete:
                     _selectedShapeInViewIndex = -1;
                     Collection.Shapes.Remove(s);
                     break;
                 case Keys.D:
-                    s.Size = s.Size.Add(new Coordinate(e.Shift ? 1 : 5, 0));
+                    s.Size = s.Size.Add(new Coordinate(dif, 0));
                     break;
                 case Keys.S:
-                    s.Size = s.Size.Add(new Coordinate(0, e.Shift ? 1 : 5));
+                    s.Size = s.Size.Add(new Coordinate(0, dif));
                     break;
                 case Keys.A:
-                    s.Size = s.Size.Add(new Coordinate(e.Shift ? -1 : -5, 0));
+                    s.Size = s.Size.Add(new Coordinate(-dif, 0));
                     break;
                 case Keys.W:
-                    s.Size = s.Size.Add(new Coordinate(0, e.Shift ? -1 : -5));
+                    s.Size = s.Size.Add(new Coordinate(0, -dif));
                     break;
-                case Keys.T:
+                case Keys.R:
                     if (!(s is Polygon || s is Line || s is Ellipse))
                         break;
                     if (line != null)
                         line.Rotation += e.Shift ? 1 : 5;
                     else if (s is Polygon)
-                        ((Polygon) s).Rotation += e.Shift ? 1 : 5;
+                        ((Polygon) s).Rotation += dif;
                     else
-                        ((Ellipse) s).Rotation += e.Shift ? 1 : 5;
+                        ((Ellipse) s).Rotation += dif;
+                    break;
+                case Keys.T:
+                    if(!(s is Polygon))
+                        break;
+                    ((Polygon) s).TurningAngle += dif;
                     break;
                 case Keys.L:
                     _layerIndex = _layerIndex == 0 ? 1 : 0;

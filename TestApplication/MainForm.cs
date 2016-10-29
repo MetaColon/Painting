@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Windows.Forms;
 using Painting.Types.Paint;
@@ -9,45 +10,39 @@ namespace TestApplication
     public partial class MainForm : Form
     {
         private readonly ShapeCollection _col;
-        private Coordinate _i;
+        private float _i;
+        private ShapeCollection foo;
 
         public MainForm()
         {
             InitializeComponent();
-            _i = new Coordinate(100, 100);
-            _col = new ShapeCollection(new List<Shape>
-            {
-                new Polygon(8, 2, new Colour(Color.Red), new Coordinate(10, 10), new Coordinate(1, 1),
-                    Colour.Invisible(), 0),
-                new Ellipse(2, new Colour(Color.Blue), new Coordinate(60, 60), new Coordinate(1, 1),
-                    Colour.Invisible()),
-                new Line(new Coordinate(10, 10), new Coordinate(11, 11), new Colour(Color.Green), 2)
-            });
+            foo =
+                new ShapeCollection(new ObservableCollection<Shape>
+                    {
+                        new Ellipse(0, new Colour(Color.Empty), new Coordinate(658, 277), new Coordinate(50, 120),
+                            new Colour(Color.FromArgb(-16777216)), 0f),
+                        new Polygon(3, 0, new Colour(Color.Empty), new Coordinate(648, 322), new Coordinate(70, 100),
+                            new Colour(Color.FromArgb(-65536)), 0, 30),
+                    })
+                    {Position = new Coordinate(0, 0)};
         }
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
-            var foo =
-                new ShapeCollection(new List<Shape>
-                {
-                    new Polygon(6, 0, new Colour(Color.Empty), new Coordinate(490, 275), new Coordinate(100, 100),
-                        new Colour(Color.FromArgb(-16777216)), 0),
-                    new Ellipse(2, new Colour(Color.FromArgb(-65536)), new Coordinate(520, 300), new Coordinate(45, 45),
-                        new Colour(Color.Empty)),
-                    new Line(new Coordinate(495, 255), new Coordinate(545, 320), new Colour(Color.FromArgb(-8388353)), 5)
-                })
-                {
-                    Position = new Coordinate(0, 0)
-                };
-            foo.Paint(e.Graphics);
+            foo.Paint(e.Graphics, foo.Position.Add(foo.Size.Div(2)));
+            Console.WriteLine(foo.ToString());
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //_i = _i.Add (new Coordinate (1, 1));
-            //_col.Size = new Coordinate (_i.X, _i.Y);
-            //label1.Text = _i.ToString ();
-            //Refresh ();
+            _i++;
+            foo.Rotation = _i;
+            Refresh();
+        }
+
+        private void MainForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            label1.Text = "X: " + e.X + "; Y: " + e.Y;
         }
     }
 }

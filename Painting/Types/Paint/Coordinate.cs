@@ -67,5 +67,9 @@ namespace Painting.Types.Paint
         public override string ToString() => $"X: {X}; Y:{Y}";
 
         public bool Symmetric => Math.Abs(X - Y) < 0.001;
+
+        public float Min() => X > Y ? Y : X;
+
+        public float Max() => X > Y ? X : Y;
     }
 }

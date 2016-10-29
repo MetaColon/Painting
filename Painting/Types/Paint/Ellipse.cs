@@ -38,14 +38,15 @@ namespace Painting.Types.Paint
 
         public void Paint(Graphics p, Coordinate rotationCenterPointFromPosition)
         {
-            p.TranslateTransform(Position.X + rotationCenterPointFromPosition.X, Position.Y + rotationCenterPointFromPosition.Y);
-            p.RotateTransform(Rotation);
+            var trans = p.Transform.Clone();
+            p.TranslateTransform (rotationCenterPointFromPosition.X, rotationCenterPointFromPosition.Y);
+            p.RotateTransform (Rotation);
+            p.TranslateTransform (-rotationCenterPointFromPosition.X, -rotationCenterPointFromPosition.Y);
             if (MainColour.Visible)
-                p.FillEllipse(new SolidBrush(MainColour.Color), -rotationCenterPointFromPosition.X, -rotationCenterPointFromPosition.Y, Size.X, Size.Y);
+                p.FillEllipse(new SolidBrush(MainColour.Color), Position.X, Position.Y, Size.X, Size.Y);
             if (LineColour.Visible)
-                p.DrawEllipse(new Pen(LineColour.Color, Width), -rotationCenterPointFromPosition.X, -rotationCenterPointFromPosition.Y, Size.X, Size.Y);
-            p.RotateTransform(-Rotation);
-            p.TranslateTransform (-Position.X - rotationCenterPointFromPosition.X, -rotationCenterPointFromPosition.Y);
+                p.DrawEllipse(new Pen(LineColour.Color, Width), Position.X, Position.Y, Size.X, Size.Y);
+            p.Transform = trans;
         }
     }
 }
