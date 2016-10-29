@@ -39,7 +39,7 @@ namespace Painting.Types.Paint
 
         public void Paint(Graphics p)
         {
-            var points = Edges.Select(coordinate => coordinate.GetPointF()).ToArray();
+            var points = Edges.Select(coordinate => coordinate.GetPointF).ToArray();
             if (MainColour.Visible)
                 p.FillPolygon(new SolidBrush(MainColour.Color), points);
             if (LineColour.Visible)

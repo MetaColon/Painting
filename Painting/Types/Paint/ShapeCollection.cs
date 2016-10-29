@@ -16,8 +16,8 @@ namespace Painting.Types.Paint
 
         public ShapeCollection(ObservableCollection<Shape> shapes)
             : base(
-                new Coordinate(shapes.Select(shape => shape.Position.X).Min(), shapes.Select(shape => shape.Position.Y).Min()),
-                new Coordinate(shapes.Select(shape => shape.Size.X).Max(),shapes.Select(shape => shape.Size.Y).Max()),
+                new Coordinate(shapes.Count > 0 ? shapes.Select(shape => shape.Position.X).Min() : 0, shapes.Count > 0 ? shapes.Select(shape => shape.Position.Y).Min() : 0),
+                new Coordinate(shapes.Count > 0 ? shapes.Select(shape => shape.Size.X).Max() : 0, shapes.Count > 0 ? shapes.Select(shape => shape.Size.Y).Max() : 0),
                 shapes.FirstOrDefault(shape => shape.MainColour.Visible)?.MainColour)
 
         {

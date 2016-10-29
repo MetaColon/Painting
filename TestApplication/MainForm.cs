@@ -24,7 +24,7 @@ namespace TestApplication
                         new Polygon(3, 0, new Colour(Color.Empty), new Coordinate(648, 322), new Coordinate(70, 100),
                             new Colour(Color.FromArgb(-65536)), 0, 30),
                     })
-                    {Position = new Coordinate(0, 0)};
+                    { Position = new Coordinate (0, 0) };
         }
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
@@ -37,6 +37,7 @@ namespace TestApplication
         {
             _i++;
             foo.Rotation = _i;
+            foo.Position = foo.Position.Add(new Coordinate(0,10));
             Refresh();
         }
 

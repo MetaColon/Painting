@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using Painting.Util;
 
 namespace Painting.Types.Paint
 {
@@ -55,12 +56,12 @@ namespace Painting.Types.Paint
             }
         }
 
-        public PointF GetPointF() => new PointF(X, Y);
+        public PointF GetPointF => new PointF(X, Y);
 
         public Coordinate Mult(double m) => new Coordinate(X*(float) m, Y*(float) m);
         public Coordinate Mult(Coordinate m) => new Coordinate(X*m.X, Y*m.Y);
 
-        public float Pyth() => (float) Math.Sqrt(X*X + Y*Y);
+        public float Pyth => (float) Math.Sqrt(X*X + Y*Y);
 
         public Coordinate Sub(Coordinate s) => Add(s.Mult(-1));
 
@@ -68,8 +69,16 @@ namespace Painting.Types.Paint
 
         public bool Symmetric => Math.Abs(X - Y) < 0.001;
 
-        public float Min() => X > Y ? Y : X;
+        public float Min => X > Y ? Y : X;
 
-        public float Max() => X > Y ? X : Y;
+        public float Max => X > Y ? X : Y;
+
+        public float Atan => (float)Physomatik.ToDegree(Math.Atan(Y/X));
+
+        public Coordinate Dif(Coordinate value) => Sub(value).Abs;
+
+        public Coordinate Abs => new Coordinate(Math.Abs(X), Math.Abs(Y));
+
+        public bool Is0 => Math.Abs(X) < 0.0001 && Math.Abs(Y) < 0.0001;
     }
 }

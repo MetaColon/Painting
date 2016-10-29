@@ -56,7 +56,7 @@ namespace Painting.Types.Paint
             p.TranslateTransform (rotationCenterPointFromPosition.X, rotationCenterPointFromPosition.Y);
             p.RotateTransform (Rotation);
             p.TranslateTransform (-rotationCenterPointFromPosition.X, -rotationCenterPointFromPosition.Y);
-            var points = GetPoints ().Select (coordinate => coordinate.GetPointF ()).ToArray ();
+            var points = GetPoints ().Select (coordinate => coordinate.GetPointF ).ToArray ();
             if (points.Length <= 0)
                 return;
             if (MainColour.Visible)
@@ -70,7 +70,7 @@ namespace Painting.Types.Paint
 
         public List<Coordinate> GetPoints ()
         {
-            var m = Position.Add (Size.Mult (0.5));
+            var m = Position.Add (Size.Div (2));
             var fin = new List<Coordinate> ();
             if (AngleCount == 0)
                 return fin;

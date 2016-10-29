@@ -63,7 +63,7 @@ namespace Painting.Types.Paint
             }
         }
 
-        public float Length => Size.Pyth();
+        public float Length => Size.Pyth;
 
         public override Coordinate Size
         {
