@@ -74,15 +74,18 @@ namespace Painting.Types.Paint
             foreach (var shape in Shapes.Reverse())
             {
                 var trans = p.Transform.Clone();
-                p.TranslateTransform(rotationCenterPointFromPosition.X, rotationCenterPointFromPosition.Y);
-                p.RotateTransform(Rotation);
-                p.TranslateTransform(-rotationCenterPointFromPosition.X,-rotationCenterPointFromPosition.Y);
+                if (Rotation != 0)
+                {
+                    p.TranslateTransform(rotationCenterPointFromPosition.X, rotationCenterPointFromPosition.Y);
+                    p.RotateTransform(Rotation);
+                    p.TranslateTransform(-rotationCenterPointFromPosition.X, -rotationCenterPointFromPosition.Y);
+                }
                 (shape as Ellipse)?.Paint(p, shape.Position.Add(shape.Size.Div(2)));
                 (shape as DefinedPolygon)?.Paint(p);
                 (shape as DefinedShape)?.Paint(p);
                 (shape as Line)?.Paint(p);
                 (shape as Polygon)?.Paint(p, shape.Position.Add(shape.Size.Div(2)));
-                (shape as Rectangle)?.Paint(p);
+                (shape as Rectangle)?.Paint(p, shape.Position.Add(shape.Size.Div(2)));
                 (shape as ShapeCollection)?.Paint(p, shape.Position.Add(shape.Size.Div(2)));
                 p.Transform = trans;
             }

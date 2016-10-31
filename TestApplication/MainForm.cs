@@ -16,15 +16,7 @@ namespace TestApplication
         public MainForm()
         {
             InitializeComponent();
-            foo =
-                new ShapeCollection(new ObservableCollection<Shape>
-                    {
-                        new Ellipse(0, new Colour(Color.Empty), new Coordinate(658, 277), new Coordinate(50, 120),
-                            new Colour(Color.FromArgb(-16777216)), 0f),
-                        new Polygon(3, 0, new Colour(Color.Empty), new Coordinate(648, 322), new Coordinate(70, 100),
-                            new Colour(Color.FromArgb(-65536)), 0, 30),
-                    })
-                    { Position = new Coordinate (0, 0) };
+            foo = new ShapeCollection (new ObservableCollection<Shape> { new Ellipse (0, new Colour (Color.Empty), new Coordinate (644, 380), new Coordinate (50, 120), new Colour (Color.FromArgb (-16777216)), 90), new Polygon (3, 0, new Colour (Color.Empty), new Coordinate (600, 389), new Coordinate (70, 100), new Colour (Color.FromArgb (-65536)), 90, 30), }) { Position = new Coordinate (0, 0) };
         }
 
         private void MainForm_Paint(object sender, PaintEventArgs e)

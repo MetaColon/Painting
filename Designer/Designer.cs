@@ -35,7 +35,16 @@ namespace Designer
             };
             SelectableShapes.DataSource = new BindingSource { DataSource = Items };
             SelectableShapes.DropDownStyle = ComboBoxStyle.DropDownList;
-            Collection = new ShapeCollection(new ObservableCollection<Shape>());
+            Collection = new ShapeCollection(new ObservableCollection<Shape>
+                {
+                    new Line(new Coordinate(525, 319), new Coordinate(617, 319),
+                        new Colour(Color.FromArgb(-16711936)), 7),
+                    new Polygon(4, 2, new Colour(Color.FromArgb(-65536)), new Coordinate(468, 262),
+                        new Coordinate(116, 116), new Colour(Color.Empty), 0, 45),
+                    new Ellipse(0, new Colour(Color.Empty), new Coordinate(475, 270), new Coordinate(100, 100),
+                        new Colour(Color.FromArgb(-16777216)), 0f),
+                })
+                {Position = new Coordinate(0, 0)};
             MainColor = Color.Empty;
             LineColor = Color.Empty;
             _selectedShapeInViewIndex = -1;
@@ -91,7 +100,7 @@ namespace Designer
                     AddShape(
                         new Rectangle((int)LineWidth.Value,
                             Util.GetColourToColor(LineColor), new Coordinate(100, 100),
-                            new Coordinate(100, 100), Util.GetColourToColor(MainColor)));
+                            new Coordinate(100, 100), Util.GetColourToColor(MainColor), 0));
                     break;
                 default:
                     throw new Exception("Unselectable Item selected");
@@ -234,12 +243,14 @@ namespace Designer
                     s.Size = s.Size.Add(new Coordinate(0, -dif));
                     break;
                 case Keys.R:
-                    if (!(s is Polygon || s is Line || s is Ellipse))
+                    if (!(s is Polygon || s is Line || s is Ellipse || s is Rectangle))
                         break;
                     if (line != null)
                         line.Rotation += e.Shift ? 1 : 5;
                     else if (s is Polygon)
                         ((Polygon) s).Rotation += dif;
+                    else if (s is Rectangle)
+                        ((Rectangle) s).Rotation += dif;
                     else
                         ((Ellipse) s).Rotation += dif;
                     break;

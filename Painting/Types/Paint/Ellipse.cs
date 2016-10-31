@@ -39,9 +39,12 @@ namespace Painting.Types.Paint
         public void Paint(Graphics p, Coordinate rotationCenterPointFromPosition)
         {
             var trans = p.Transform.Clone();
-            p.TranslateTransform (rotationCenterPointFromPosition.X, rotationCenterPointFromPosition.Y);
-            p.RotateTransform (Rotation);
-            p.TranslateTransform (-rotationCenterPointFromPosition.X, -rotationCenterPointFromPosition.Y);
+            if (Rotation != 0)
+            {
+                p.TranslateTransform(rotationCenterPointFromPosition.X, rotationCenterPointFromPosition.Y);
+                p.RotateTransform(Rotation);
+                p.TranslateTransform(-rotationCenterPointFromPosition.X, -rotationCenterPointFromPosition.Y);
+            }
             if (MainColour.Visible)
                 p.FillEllipse(new SolidBrush(MainColour.Color), Position.X, Position.Y, Size.X, Size.Y);
             if (LineColour.Visible)

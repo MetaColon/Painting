@@ -53,9 +53,12 @@ namespace Painting.Types.Paint
         public void Paint (Graphics p, Coordinate rotationCenterPointFromPosition)
         {
             var trans = p.Transform;
-            p.TranslateTransform (rotationCenterPointFromPosition.X, rotationCenterPointFromPosition.Y);
-            p.RotateTransform (Rotation);
-            p.TranslateTransform (-rotationCenterPointFromPosition.X, -rotationCenterPointFromPosition.Y);
+            if (Rotation != 0)
+            {
+                p.TranslateTransform(rotationCenterPointFromPosition.X, rotationCenterPointFromPosition.Y);
+                p.RotateTransform(Rotation);
+                p.TranslateTransform(-rotationCenterPointFromPosition.X, -rotationCenterPointFromPosition.Y);
+            }
             var points = GetPoints ().Select (coordinate => coordinate.GetPointF ).ToArray ();
             if (points.Length <= 0)
                 return;
