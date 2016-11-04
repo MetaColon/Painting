@@ -41,7 +41,7 @@ namespace Painting.Types.Paint
                     ? 0
                     : ((obj.X < X) && (obj.Y < Y)
                         ? 1
-                        : (obj.X + obj.Y).CompareTo(obj.X + obj.Y)));
+                        : /*(obj.X + obj.Y).CompareTo(obj.X + obj.Y)))*/0));
 
         public Coordinate Div(double d) => new Coordinate(X/(float) d, Y/(float) d);
         public Coordinate Div(Coordinate d) => new Coordinate(X/d.X, Y/d.Y);

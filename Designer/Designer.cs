@@ -286,7 +286,7 @@ namespace Designer
         private int GetClickedItem(float x, float y)
         {
             var enumerable =
-                Collection.Shapes.Select((shape, i) => shape.IsCoordinateInThis(new Coordinate(x, y)) ? i : -1).ToList();
+                Collection.Shapes.Select((shape, i) => shape.IsCoordinateInThis(new Coordinate(x, y)) || (shape is Line && shape.Position.Dif(new Coordinate(x,y)).Abs.CompareTo(new Coordinate(5,5)) == -1) ? i : -1).ToList();
             if (!enumerable.Any(i => i > -1))
                 return -1;
             var f = enumerable.Where(i => i >= 0).ToList();
