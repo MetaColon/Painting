@@ -36,6 +36,6 @@ namespace Painting.Types.Paint
             }
         }
 
-        public static Colour Invisible() => new Colour(new Color(), false);
+        public static Colour Invisible => new Colour(new Color(), false);
     }
 }

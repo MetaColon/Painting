@@ -11,6 +11,6 @@ namespace Designer
             : "Invisible)";
 
         public static Colour GetColourToColor(Color color)
-            => !color.IsEmpty ? new Colour(color) : Colour.Invisible();
+            => !color.IsEmpty ? new Colour(color) : Colour.Invisible;
     }
 }
