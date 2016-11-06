@@ -29,10 +29,11 @@ namespace Painting.Types.Paint
 
         public int CompareTo(object obj) => obj is Coordinate ? CompareTo((Coordinate) obj) : -2;
 
-        protected bool Equals(Coordinate other)
+        private bool Equals(Coordinate other)
             => (other != null) && (Math.Abs(X - other.X) < 0.001) && (Math.Abs(Y - other.Y) < 0.001);
 
         public Coordinate Add(Coordinate a) => new Coordinate(X + a.X, Y + a.Y);
+        public Coordinate Add(float a) => new Coordinate(X + a, Y + a);
 
         public int CompareTo(Coordinate obj) =>
             (obj.X > X) && (obj.Y > Y)
@@ -80,5 +81,7 @@ namespace Painting.Types.Paint
         public Coordinate Abs => new Coordinate(Math.Abs(X), Math.Abs(Y));
 
         public bool Is0 => Math.Abs(X) < 0.0001 && Math.Abs(Y) < 0.0001;
+
+        public Coordinate QuadraticForm => new Coordinate(Max, Max);
     }
 }
