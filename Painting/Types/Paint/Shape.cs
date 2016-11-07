@@ -41,5 +41,7 @@
             =>
             (coordinate.X >= Position.X) && (coordinate.X <= Position.X + Size.X) && (coordinate.Y >= Position.Y) &&
             (coordinate.Y <= Position.Y + Size.Y);
+
+        public Coordinate CenterPosition => Position.Add(Size.Div(2));
     }
 }

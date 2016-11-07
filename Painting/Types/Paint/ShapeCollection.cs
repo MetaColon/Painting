@@ -80,13 +80,13 @@ namespace Painting.Types.Paint
                     p.RotateTransform(Rotation);
                     p.TranslateTransform(-rotationCenterPointFromPosition.X, -rotationCenterPointFromPosition.Y);
                 }
-                (shape as Ellipse)?.Paint(p, shape.Position.Add(shape.Size.Div(2)));
+                (shape as Ellipse)?.Paint(p, shape.CenterPosition);
                 (shape as DefinedPolygon)?.Paint(p);
                 (shape as DefinedShape)?.Paint(p);
                 (shape as Line)?.Paint(p);
-                (shape as Polygon)?.Paint(p, shape.Position.Add(shape.Size.Div(2)));
-                (shape as Rectangle)?.Paint(p, shape.Position.Add(shape.Size.Div(2)));
-                (shape as ShapeCollection)?.Paint(p, shape.Position.Add(shape.Size.Div(2)));
+                (shape as Polygon)?.Paint(p, shape.CenterPosition);
+                (shape as Rectangle)?.Paint(p, shape.CenterPosition);
+                (shape as ShapeCollection)?.Paint(p, shape.CenterPosition);
                 p.Transform = trans;
             }
         }
