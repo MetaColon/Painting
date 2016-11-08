@@ -12,8 +12,8 @@ namespace Painting.Types.Paint
         private float _rotation;
         private Coordinate _size;
 
-        public Line(Coordinate start, Coordinate end, Colour lineColour, float width)
-            : base(start, end.Sub(start), lineColour)
+        public Line(Coordinate start, Coordinate end, Colour lineColour, float width, float rotation=0)
+            : base(start, end.Sub(start), lineColour, rotation)
         {
             End = end;
             Width = width;
@@ -26,27 +26,27 @@ namespace Painting.Types.Paint
             {
                 _end = value;
                 if ((Position == null) || (value == null)) return;
-                if (!Size.Equals(End.Sub(Position)))
-                    Size = End.Sub(Position);
-                if (Size == null)
+                if (!UnturnedSize.Equals(End.Sub(Position)))
+                    UnturnedSize = End.Sub(Position);
+                if (UnturnedSize == null)
                     return;
-                var n = (float) Physomatik.ToDegree(Math.Asin(Size.Y/Length));
-                if (Size.X < 0)
+                var n = (float) Physomatik.ToDegree(Math.Asin(UnturnedSize.Y/Length()));
+                if (UnturnedSize.X < 0)
                     n = 180 - n;
                 if (Math.Abs(Rotation - n) > 0.001)
                     Rotation = n;
             }
         }
 
-        public float Rotation
+        public override float Rotation
         {
             get { return _rotation; }
             set
             {
                 _rotation = value;
-                if ((Position == null) || (End == null) || (Size == null)) return;
-                var n = new Coordinate((float) Math.Cos(Physomatik.ToRadian(value))*Length,
-                    (float) Math.Sin(Physomatik.ToRadian(value))*Length).Add(Position);
+                if ((Position == null) || (End == null) || (UnturnedSize == null)) return;
+                var n = new Coordinate((float) Math.Cos(Physomatik.ToRadian(value))*Length(),
+                    (float) Math.Sin(Physomatik.ToRadian(value))*Length()).Add(Position);
                 if (!End.Equals(n))
                     End = n;
             }
@@ -58,21 +58,21 @@ namespace Painting.Types.Paint
             set
             {
                 _position = value;
-                if ((End != null) && (Position != null) && !Size.Equals(End.Sub(Position)))
-                    End = Position.Add(Size);
+                if ((End != null) && (Position != null) && !UnturnedSize.Equals(End.Sub(Position)))
+                    End = Position.Add(UnturnedSize);
             }
         }
 
-        public float Length => Size.Pyth;
+        public float Length() => UnturnedSize.Pyth();
 
-        public override Coordinate Size
+        public override Coordinate UnturnedSize
         {
             get { return _size; }
             set
             {
                 _size = value;
-                if ((Size != null) && (End != null) && !End.Equals(Position.Add(Size)))
-                    End = Position.Add(Size);
+                if ((UnturnedSize != null) && (End != null) && !End.Equals(Position.Add(UnturnedSize)))
+                    End = Position.Add(UnturnedSize);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Painting.Types.Paint
 
         protected bool Equals(Line other)
             =>
-            (other != null) && Equals(End, other.End) && MainColour.Equals(other.MainColour) && Equals(Size, other.Size) &&
+            (other != null) && Equals(End, other.End) && MainColour.Equals(other.MainColour) && Equals(UnturnedSize, other.UnturnedSize) &&
             (Math.Abs(Width - other.Width) < 0.001);
 
         public void Paint(Graphics p)

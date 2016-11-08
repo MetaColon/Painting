@@ -4,8 +4,8 @@ namespace Painting.Types.Paint
 {
     public class DefinedShape : Shape
     {
-        public DefinedShape(Pixel[,] pixels, Coordinate size, Coordinate position, Colour mainColour)
-            : base(position, size, mainColour)
+        public DefinedShape(Pixel[,] pixels, Coordinate size, Coordinate position, Colour mainColour, float rotation = 0)
+            : base(position, size, mainColour, rotation)
         {
             Pixels = pixels;
         }

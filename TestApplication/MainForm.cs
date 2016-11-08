@@ -21,7 +21,7 @@ namespace TestApplication
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
-            foo.Paint(e.Graphics, foo.Position.Add(foo.Size.Div(2)));
+            foo.Paint(e.Graphics, foo.Position.Add(foo.UnturnedSize.Div(2)));
             Console.WriteLine(foo.ToString());
         }
 

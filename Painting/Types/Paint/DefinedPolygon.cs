@@ -6,8 +6,8 @@ namespace Painting.Types.Paint
 {
     public class DefinedPolygon : Shape
     {
-        public DefinedPolygon(List<Coordinate> edges, int width, Colour lineColour, Colour mainColour)
-            : base(edges.Min(), edges.Max().Sub(edges.Min()), mainColour)
+        public DefinedPolygon(List<Coordinate> edges, int width, Colour lineColour, Colour mainColour, float rotation = 0)
+            : base(edges.Min(), edges.Max().Sub(edges.Min()), mainColour, rotation)
         {
             Edges = edges;
             Width = width;
@@ -39,7 +39,7 @@ namespace Painting.Types.Paint
 
         public void Paint(Graphics p)
         {
-            var points = Edges.Select(coordinate => coordinate.GetPointF).ToArray();
+            var points = Edges.Select(coordinate => coordinate.GetPointF()).ToArray();
             if (MainColour.Visible)
                 p.FillPolygon(new SolidBrush(MainColour.Color), points);
             if (LineColour.Visible)

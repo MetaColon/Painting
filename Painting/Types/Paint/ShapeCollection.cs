@@ -14,17 +14,17 @@ namespace Painting.Types.Paint
         private Coordinate _size;
         private float _rotation;
 
-        public ShapeCollection(ObservableCollection<Shape> shapes)
+        public ShapeCollection(ObservableCollection<Shape> shapes, float rotation = 0)
             : base(
                 new Coordinate(shapes.Count > 0 ? shapes.Select(shape => shape.Position.X).Min() : 0, shapes.Count > 0 ? shapes.Select(shape => shape.Position.Y).Min() : 0),
-                new Coordinate(shapes.Count > 0 ? shapes.Select(shape => shape.Size.X).Max() : 0, shapes.Count > 0 ? shapes.Select(shape => shape.Size.Y).Max() : 0),
-                shapes.FirstOrDefault(shape => shape.MainColour.Visible)?.MainColour)
+                new Coordinate(shapes.Count > 0 ? shapes.Select(shape => shape.UnturnedSize.X).Max() : 0, shapes.Count > 0 ? shapes.Select(shape => shape.UnturnedSize.Y).Max() : 0),
+                shapes.FirstOrDefault(shape => shape.MainColour.Visible)?.MainColour, rotation)
 
         {
             Shapes = new ObservableCollection<Shape>(shapes);
         }
 
-        public float Rotation
+        public override float Rotation
         {
             get { return _rotation; }
             set
@@ -49,18 +49,18 @@ namespace Painting.Types.Paint
             }
         }
 
-        public override Coordinate Size
+        public override Coordinate UnturnedSize
         {
             get { return _size; }
             set
             {
-                if (Size != null && Size.Equals (value))
+                if (UnturnedSize != null && UnturnedSize.Equals (value))
                     return;
                 if ((Shapes != null) && (_size != null))
                     foreach (var shape in Shapes)
                     {
                         var fac = value.Div(_size);
-                        shape.Size = shape.Size.Mult(fac);
+                        shape.UnturnedSize = shape.UnturnedSize.Mult(fac);
                         var dif = shape.Position.Sub(Position);
                         dif = dif.Mult(fac);
                         shape.Position = dif.Add(Position);

@@ -12,7 +12,7 @@ namespace Designer
                 var ellipse = shape as Ellipse;
                 if (ellipse != null)
                     fin +=
-                        $"new Ellipse({ellipse.Width}, {GetColourString(ellipse.LineColour)}, {GetCoordinate(ellipse.Position)}, {GetCoordinate(ellipse.Size)}, {GetColourString(ellipse.MainColour)}, {ellipse.Rotation}),";
+                        $"new Ellipse({ellipse.Width}, {GetColourString(ellipse.LineColour)}, {GetCoordinate(ellipse.Position)}, {GetCoordinate(ellipse.UnturnedSize)}, {GetColourString(ellipse.MainColour)}, {ellipse.Rotation}),";
                 var line = shape as Line;
                 if (line != null)
                     fin +=
@@ -20,11 +20,11 @@ namespace Designer
                 var polygon = shape as Polygon;
                 if (polygon != null)
                     fin +=
-                        $"new Polygon({polygon.AngleCount}, {polygon.Width}, {GetColourString(polygon.LineColour)}, {GetCoordinate(shape.Position)}, {GetCoordinate(shape.Size)}, {GetColourString(shape.MainColour)}, {polygon.Rotation}, {polygon.TurningAngle}),";
+                        $"new Polygon({polygon.AngleCount}, {polygon.Width}, {GetColourString(polygon.LineColour)}, {GetCoordinate(shape.Position)}, {GetCoordinate(shape.UnturnedSize)}, {GetColourString(shape.MainColour)}, {polygon.Rotation}, {polygon.TurningAngle}),";
                 var rectangle = shape as Rectangle;
                 if (rectangle != null)
                     fin +=
-                        $"new Rectangle({rectangle.Width}, {GetColourString(rectangle.LineColour)}, {GetCoordinate(shape.Position)}, {GetCoordinate(shape.Size)}, {GetColourString(shape.MainColour)}, {rectangle.Rotation}),";
+                        $"new Rectangle({rectangle.Width}, {GetColourString(rectangle.LineColour)}, {GetCoordinate(shape.Position)}, {GetCoordinate(shape.UnturnedSize)}, {GetColourString(shape.MainColour)}, {rectangle.Rotation}),";
             }
             fin += "}){Position = new Coordinate(0, 0)};";
             return fin;

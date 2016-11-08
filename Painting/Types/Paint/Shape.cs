@@ -1,4 +1,7 @@
-﻿namespace Painting.Types.Paint
+﻿using System;
+using Painting.Util;
+
+namespace Painting.Types.Paint
 {
     public class Shape
     {
@@ -6,22 +9,23 @@
         {
         }
 
-        public Shape(Coordinate position, Coordinate size, Colour mainColour)
+        public Shape(Coordinate position, Coordinate unturnedSize, Colour mainColour, float rotation)
         {
-            Size = size;
+            UnturnedSize = unturnedSize;
             Position = position;
             MainColour = mainColour;
+            Rotation = rotation;
         }
 
         public virtual Colour MainColour { get; set; }
         public virtual Coordinate Position { get;
             set; }
 
-        public virtual Coordinate Size { get; set; } //If avoidable, don't change the size :)
+        public virtual Coordinate UnturnedSize { get; set; } //If avoidable, don't change the unturnedSize :)
 
         protected bool Equals(Shape other)
             =>
-            (other != null) && Size != null && Size.Equals(other.Size) && Position != null && Position.Equals (other.Position) && MainColour != null &&
+            (other != null) && UnturnedSize != null && UnturnedSize.Equals(other.UnturnedSize) && Position != null && Position.Equals (other.Position) && MainColour != null &&
             MainColour.Equals(other.MainColour);
 
         public override bool Equals(object obj) => obj is Shape && Equals((Shape) obj);
@@ -30,18 +34,19 @@
         {
             unchecked
             {
-                return ((((Size?.GetHashCode() ?? 0)*397) ^ (Position?.GetHashCode() ?? 0))*397) ^
+                return ((((UnturnedSize?.GetHashCode() ?? 0)*397) ^ (Position?.GetHashCode() ?? 0))*397) ^
                        MainColour.GetHashCode();
             }
         }
 
-        public override string ToString() => $"Position: {Position}; Size:{Size}";
+        public override string ToString() => $"Position: {Position}; UnturnedSize:{UnturnedSize}";
 
         public bool IsCoordinateInThis(Coordinate coordinate)
             =>
-            (coordinate.X >= Position.X) && (coordinate.X <= Position.X + Size.X) && (coordinate.Y >= Position.Y) &&
-            (coordinate.Y <= Position.Y + Size.Y);
+            (coordinate.X >= Position.X) && (coordinate.X <= Position.X + UnturnedSize.X) && (coordinate.Y >= Position.Y) &&
+            (coordinate.Y <= Position.Y + UnturnedSize.Y);
 
-        public Coordinate CenterPosition => Position.Add(Size.Div(2));
+        public Coordinate CenterPosition => Position.Add(UnturnedSize.Div(2));
+        public virtual float Rotation { get; set; }
     }
 }

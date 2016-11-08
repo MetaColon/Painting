@@ -6,16 +6,14 @@ namespace Painting.Types.Paint
     public class Ellipse : Shape
     {
         public Ellipse(float width, Colour lineColour, Coordinate position, Coordinate size, Colour mainColour, float rotation)
-            : base(position, size, mainColour)
+            : base(position, size, mainColour, rotation)
         {
             Width = width;
             LineColour = lineColour;
-            Rotation = rotation;
         }
 
         public Colour LineColour { get; set; }
         public float Width { get; set; }
-        public float Rotation { get; set; }
 
         protected bool Equals(Ellipse other)
             =>
@@ -46,9 +44,9 @@ namespace Painting.Types.Paint
                 p.TranslateTransform(-rotationCenterPointFromPosition.X, -rotationCenterPointFromPosition.Y);
             }
             if (MainColour.Visible)
-                p.FillEllipse(new SolidBrush(MainColour.Color), Position.X, Position.Y, Size.X, Size.Y);
+                p.FillEllipse(new SolidBrush(MainColour.Color), Position.X, Position.Y, UnturnedSize.X, UnturnedSize.Y);
             if (LineColour.Visible)
-                p.DrawEllipse(new Pen(LineColour.Color, Width), Position.X, Position.Y, Size.X, Size.Y);
+                p.DrawEllipse(new Pen(LineColour.Color, Width), Position.X, Position.Y, UnturnedSize.X, UnturnedSize.Y);
             p.Transform = trans;
         }
     }

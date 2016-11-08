@@ -10,12 +10,11 @@ namespace Painting.Types.Paint
     public class Polygon : Shape
     {
         public Polygon (int angleCount, float width, Colour lineColour, Coordinate position, Coordinate size,
-            Colour mainColour, float rotation, float turningAngle) : base (position, size, mainColour)
+            Colour mainColour, float rotation, float turningAngle) : base (position, size, mainColour, rotation)
         {
             AngleCount = angleCount;
             Width = width;
             LineColour = lineColour;
-            Rotation = rotation;
             TurningAngle = turningAngle;
         }
 
@@ -24,9 +23,7 @@ namespace Painting.Types.Paint
         public Colour LineColour { get; set; }
         public float TurningAngle { get; set; }
 
-        public float Rotation { get; set; }
-
-        public override Coordinate Size { get; set; }
+        public override Coordinate UnturnedSize { get; set; }
 
         public override bool Equals (object obj) => obj is Polygon && Equals ((Polygon) obj);
 
@@ -40,7 +37,7 @@ namespace Painting.Types.Paint
                 hashCode = (hashCode*397) ^ (LineColour?.GetHashCode() ?? 0);
                 hashCode = (hashCode*397) ^ TurningAngle.GetHashCode();
                 hashCode = (hashCode*397) ^ Rotation.GetHashCode();
-                hashCode = (hashCode*397) ^ (Size?.GetHashCode() ?? 0);
+                hashCode = (hashCode*397) ^ (UnturnedSize?.GetHashCode() ?? 0);
                 return hashCode;
             }
         }
@@ -59,7 +56,7 @@ namespace Painting.Types.Paint
                 p.RotateTransform(Rotation);
                 p.TranslateTransform(-rotationCenterPointFromPosition.X, -rotationCenterPointFromPosition.Y);
             }
-            var points = GetPoints ().Select (coordinate => coordinate.GetPointF ).ToArray ();
+            var points = GetPoints ().Select (coordinate => coordinate.GetPointF()).ToArray ();
             if (points.Length <= 0)
                 return;
             if (MainColour.Visible)
@@ -73,13 +70,13 @@ namespace Painting.Types.Paint
 
         public List<Coordinate> GetPoints ()
         {
-            var m = Position.Add (Size.Div (2));
+            var m = Position.Add (UnturnedSize.Div (2));
             var fin = new List<Coordinate> ();
             if (AngleCount == 0)
                 return fin;
             for (var i = TurningAngle; i < 360 + TurningAngle; i += (float) 360 / AngleCount)
-                fin.Add (m.Add (new Coordinate ((float) Math.Cos (Physomatik.ToRadian (i)) * (Size.X / 2),
-                    (float) Math.Sin (Physomatik.ToRadian (i)) * (Size.Y / 2))));
+                fin.Add (m.Add (new Coordinate ((float) Math.Cos (Physomatik.ToRadian (i)) * (UnturnedSize.X / 2),
+                    (float) Math.Sin (Physomatik.ToRadian (i)) * (UnturnedSize.Y / 2))));
             return fin;
         }
     }

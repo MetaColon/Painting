@@ -5,17 +5,15 @@ namespace Painting.Types.Paint
 {
     public class Rectangle : Shape
     {
-        public Rectangle(float width, Colour lineColour, Coordinate position, Coordinate size, Colour mainColour, float rotation)
-            : base(position, size, mainColour)
+        public Rectangle(float width, Colour lineColour, Coordinate position, Coordinate unturnedSize, Colour mainColour, float rotation)
+            : base(position, unturnedSize, mainColour, rotation)
         {
             Width = width;
             LineColour = lineColour;
-            Rotation = rotation;
         }
 
         public float Width { get; set; }
         public Colour LineColour { get; set; }
-        public float Rotation { get; set; }
 
         public override bool Equals(object obj) => obj is Rectangle && Equals((Rectangle) obj);
 
@@ -46,9 +44,9 @@ namespace Painting.Types.Paint
                 p.TranslateTransform(-rotationCenterPointFromPosition.X, -rotationCenterPointFromPosition.Y);
             }
             if (MainColour.Visible)
-                p.FillRectangle(new SolidBrush(MainColour.Color), Position.X, Position.Y, Size.X, Size.Y);
+                p.FillRectangle(new SolidBrush(MainColour.Color), Position.X, Position.Y, UnturnedSize.X, UnturnedSize.Y);
             if (LineColour.Visible)
-                p.DrawRectangle(new Pen(LineColour.Color, Width), Position.X, Position.Y, Size.X, Size.Y);
+                p.DrawRectangle(new Pen(LineColour.Color, Width), Position.X, Position.Y, UnturnedSize.X, UnturnedSize.Y);
             p.Transform = trans;
         }
     }

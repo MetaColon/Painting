@@ -191,8 +191,8 @@ namespace Designer
         {
             if (_selectedShapeInViewIndex < 0)
                 return;
-            Collection.Shapes[_selectedShapeInViewIndex].Size =
-                Collection.Shapes[_selectedShapeInViewIndex].Size.Add(new Coordinate(e.Delta / (float)15,
+            Collection.Shapes[_selectedShapeInViewIndex].UnturnedSize =
+                Collection.Shapes[_selectedShapeInViewIndex].UnturnedSize.Add(new Coordinate(e.Delta / (float)15,
                     e.Delta / (float)15));
             SelectShape();
             Refresh();
@@ -200,7 +200,7 @@ namespace Designer
 
         private void Designer_Paint(object sender, PaintEventArgs e)
         {
-            Collection.Paint(e.Graphics, Collection.Size.Div(2));
+            Collection.Paint(e.Graphics, Collection.UnturnedSize.Div(2));
         }
 
         private void Designer_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -231,16 +231,16 @@ namespace Designer
                     Collection.Shapes.Remove(s);
                     break;
                 case Keys.D:
-                    s.Size = s.Size.Add(new Coordinate(dif, 0));
+                    s.UnturnedSize = s.UnturnedSize.Add(new Coordinate(dif, 0));
                     break;
                 case Keys.S:
-                    s.Size = s.Size.Add(new Coordinate(0, dif));
+                    s.UnturnedSize = s.UnturnedSize.Add(new Coordinate(0, dif));
                     break;
                 case Keys.A:
-                    s.Size = s.Size.Add(new Coordinate(-dif, 0));
+                    s.UnturnedSize = s.UnturnedSize.Add(new Coordinate(-dif, 0));
                     break;
                 case Keys.W:
-                    s.Size = s.Size.Add(new Coordinate(0, -dif));
+                    s.UnturnedSize = s.UnturnedSize.Add(new Coordinate(0, -dif));
                     break;
                 case Keys.R:
                     if (!(s is Polygon || s is Line || s is Ellipse || s is Rectangle))
@@ -286,7 +286,13 @@ namespace Designer
         private int GetClickedItem(float x, float y)
         {
             var enumerable =
-                Collection.Shapes.Select((shape, i) => shape.IsCoordinateInThis(new Coordinate(x, y)) || (shape is Line && shape.Position.Dif(new Coordinate(x,y)).Abs.CompareTo(new Coordinate(5,5)) == -1) ? i : -1).ToList();
+                Collection.Shapes.Select(
+                    (shape, i) =>
+                        shape.IsCoordinateInThis(new Coordinate(x, y)) ||
+                        (shape is Line &&
+                         shape.Position.Dif(new Coordinate(x, y)).Abs().CompareTo(new Coordinate(5, 5)) == -1)
+                            ? i
+                            : -1).ToList();
             if (!enumerable.Any(i => i > -1))
                 return -1;
             var f = enumerable.Where(i => i >= 0).ToList();
@@ -329,7 +335,7 @@ namespace Designer
                 return;
             }
             var sel = Collection.Shapes[_selectedShapeInViewIndex];
-            var pos = sel.Position.Add(sel.Size.Div(new Coordinate(1, 2)).Add(new Coordinate(1, 1)));
+            var pos = sel.Position.Add(sel.UnturnedSize.Div(new Coordinate(1, 2)).Add(new Coordinate(1, 1)));
             Pointer.Text = Resources.Designer_SelectShape___;
             Pointer.Left = (int)Math.Ceiling(pos.X);
             Pointer.Top = (int)Math.Ceiling(pos.Y);
