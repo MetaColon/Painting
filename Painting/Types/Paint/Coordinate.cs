@@ -35,6 +35,11 @@ namespace Painting.Types.Paint
         public Coordinate Add(Coordinate a) => new Coordinate(X + a.X, Y + a.Y);
         public Coordinate Add(float a) => new Coordinate(X + a, Y + a);
 
+        /// <summary>
+        /// returns -1 if comparing object is bigger, 0 if they're equal or one parameter is greater and one smaller and 1 if this object is bigger
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public int CompareTo(Coordinate obj) =>
             (obj.X > X) && (obj.Y > Y)
                 ? -1
