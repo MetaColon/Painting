@@ -13,8 +13,9 @@ namespace Painting.Types.Paint
         /// <param name="b"></param>
         public Area(Coordinate a, Coordinate b)
         {
-            switch (Start.CompareTo(End))
+            switch (a.CompareTo(b))
             {
+                case 0:
                 case -1:
                     Start = a;
                     End = b;

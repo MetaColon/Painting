@@ -27,7 +27,7 @@ namespace Painting.Types.Paint
         public float X { get; set; }
         public float Y { get; set; }
 
-        public int CompareTo(object obj) => obj is Coordinate ? CompareTo((Coordinate) obj) : -2;
+        public int CompareTo(object obj) => obj is Coordinate ? CompareTo((Coordinate)obj) : -2;
 
         private bool Equals(Coordinate other)
             => (other != null) && (Math.Abs(X - other.X) < 0.001) && (Math.Abs(Y - other.Y) < 0.001);
@@ -49,23 +49,23 @@ namespace Painting.Types.Paint
                         ? 1
                         : /*(obj.X + obj.Y).CompareTo(obj.X + obj.Y)))*/0));
 
-        public Coordinate Div(double d) => new Coordinate(X/(float) d, Y/(float) d);
-        public Coordinate Div(Coordinate d) => new Coordinate(X/d.X, Y/d.Y);
+        public Coordinate Div(double d) => new Coordinate(X / (float)d, Y / (float)d);
+        public Coordinate Div(Coordinate d) => new Coordinate(X / d.X, Y / d.Y);
 
-        public override bool Equals(object obj) => obj is Coordinate && Equals((Coordinate) obj);
+        public override bool Equals(object obj) => obj is Coordinate && Equals((Coordinate)obj);
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return (X.GetHashCode()*397) ^ Y.GetHashCode();
+                return (X.GetHashCode() * 397) ^ Y.GetHashCode();
             }
         }
 
         public PointF GetPointF() => new PointF(X, Y);
 
-        public Coordinate Mult(double m) => new Coordinate(X*(float) m, Y*(float) m);
-        public Coordinate Mult(Coordinate m) => new Coordinate(X*m.X, Y*m.Y);
+        public Coordinate Mult(double m) => new Coordinate(X * (float)m, Y * (float)m);
+        public Coordinate Mult(Coordinate m) => new Coordinate(X * m.X, Y * m.Y);
 
         public float Pyth() => (float)Math.Sqrt(X * X + Y * Y);
 
@@ -79,7 +79,7 @@ namespace Painting.Types.Paint
 
         public float Max() => X > Y ? X : Y;
 
-        public float Atan() => (float)Physomatik.ToDegree(Math.Atan(Y/X));
+        public float Atan() => (float)Physomatik.ToDegree(Math.Atan(Y / X));
 
         public Coordinate Dif(Coordinate value) => Sub(value).Abs();
 
@@ -88,5 +88,7 @@ namespace Painting.Types.Paint
         public bool Is0() => Math.Abs(X) < 0.0001 && Math.Abs(Y) < 0.0001;
 
         public Coordinate QuadraticForm() => new Coordinate(Max(), Max());
+
+        public float GetPitchTo(Coordinate aim) => (Y - aim.Y) / (X - aim.X);
     }
 }
