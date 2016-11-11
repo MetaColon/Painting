@@ -13,20 +13,8 @@ namespace Painting.Types.Paint
         /// <param name="b"></param>
         public Area(Coordinate a, Coordinate b)
         {
-            switch (a.CompareTo(b))
-            {
-                case 0:
-                case -1:
-                    Start = a;
-                    End = b;
-                    break;
-                case 1:
-                    Start = b;
-                    End = a;
-                    break;
-                default:
-                    throw new Exception("The given Coordinates are not valid for an area!");
-            }
+            Start = new Coordinate(Math.Min(a.X,b.X), Math.Min(a.Y, b.Y));
+            End = new Coordinate(Math.Max(a.X, b.X), Math.Max(a.Y, b.Y));
         }
 
         public bool IsCoordinateInArea(Coordinate coord) => coord.CompareTo(Start) == 1 && coord.CompareTo(End) == -1;
